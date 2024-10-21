@@ -91,34 +91,34 @@ Scene::Scene() {
         std::cerr << "Warning: uniform 'modelMatrix' not found in shader." << std::endl;
     }
     
-    Models* model = new Models(tree, 92814, true);
-    model->setShaderProgram(shader2);
+    Models* treeModel = new Models(tree, 92814, true);
+    treeModel->setShaderProgram(shader2);
 
-    Models* model2 = new Models(bushes, 8730, true);
-    model2->setShaderProgram(shader3);
+    Models* treeModel2 = new Models(tree, 92814, true);
+    treeModel2->setShaderProgram(shader3);
 
-    Models* model3 = new Models(bushes, 8730, true);
-    model3->setShaderProgram(shader2);
+    Models* bush = new Models(bushes, 8730, true);
+    bush->setShaderProgram(shader3);
+
 
     CompositeTransform* compositeTransform1 = new CompositeTransform();
     compositeTransform1->addTransform(new Scale(glm::vec3(2.0f, 2.0f, 2.0f)));
-    compositeTransform1->addTransform(new Translate(glm::vec3(-2.0f, 0.0f, 0.0f)));
 
     CompositeTransform* compositeTransform2 = new CompositeTransform();
     compositeTransform2->addTransform(new Rotate(20.0f, glm::vec3(1.0f, 0.0f, 0.0f)));
-    compositeTransform2->addTransform(new Translate(glm::vec3(0.0f, 0.0f, 0.0f)));
 
     CompositeTransform* compositeTransform3 = new CompositeTransform();
-    compositeTransform3->addTransform(new Rotate(-20.0f, glm::vec3(1.0f, 0.0f, 0.0f)));
+    compositeTransform3->addTransform(new Translate(glm::vec3(1.0f, 0.0f, 0.0f)));
+    compositeTransform3->addTransform(new Scale(glm::vec3(2.0f, 2.0f, 2.0f)));
 
-    model2->setTransform(compositeTransform1);
-    model->setTransform(compositeTransform2);
-    model3->setTransform(compositeTransform3);
 
-    addObject(model);
-    addObject(model2);
-    addObject(model3);
+    bush->setTransform(compositeTransform1);
+    treeModel->setTransform(compositeTransform2);
+    treeModel2->setTransform(compositeTransform3);
 
+    addObject(treeModel);
+    addObject(bush);
+    addObject(treeModel2);
 
   /*Triangle* triangle = new Triangle();
     triangle->setShaderProgram(shader1);
@@ -145,7 +145,8 @@ void Scene::render() {
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);  // Up vector
     glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
     // Set up projection matrix (perspective)
-    float aspectRatio = 800.0f / 600.0f;  // Example aspect ratio (screen width / height)
+
+    float aspectRatio = 800.0f / 600.0f;  
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
     for (DrawableObject* object : objects) {
         glm::mat4 modelMatrix = object->getModelMatrix();

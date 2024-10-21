@@ -9,4 +9,3 @@ public:
     virtual glm::mat4 getMatrix() const = 0;
     virtual ~Transform() {}
 };
-
