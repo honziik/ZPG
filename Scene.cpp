@@ -94,31 +94,29 @@ Scene::Scene() {
     Models* treeModel = new Models(tree, 92814, true);
     treeModel->setShaderProgram(shader2);
 
-    Models* treeModel2 = new Models(tree, 92814, true);
-    treeModel2->setShaderProgram(shader3);
+  //  Models* treeModel2 = new Models(tree, 92814, true);
+  ////  treeModel2->setShaderProgram(shader3);
 
     Models* bush = new Models(bushes, 8730, true);
     bush->setShaderProgram(shader3);
 
 
     CompositeTransform* compositeTransform1 = new CompositeTransform();
-    compositeTransform1->addTransform(new Scale(glm::vec3(2.0f, 2.0f, 2.0f)));
+    compositeTransform1->addTransform(new Scale(glm::vec3(4.0f, 4.0f, 4.0f)));
 
     CompositeTransform* compositeTransform2 = new CompositeTransform();
-    compositeTransform2->addTransform(new Rotate(20.0f, glm::vec3(1.0f, 0.0f, 0.0f)));
+    compositeTransform2->addTransform(new Translate(glm::vec3(1.0f, 0.0f, 0.0f)));
 
     CompositeTransform* compositeTransform3 = new CompositeTransform();
     compositeTransform3->addTransform(new Translate(glm::vec3(1.0f, 0.0f, 0.0f)));
-    compositeTransform3->addTransform(new Scale(glm::vec3(2.0f, 2.0f, 2.0f)));
-
 
     bush->setTransform(compositeTransform1);
     treeModel->setTransform(compositeTransform2);
-    treeModel2->setTransform(compositeTransform3);
+    //// treeModel2->setTransform(compositeTransform3);
 
     addObject(treeModel);
     addObject(bush);
-    addObject(treeModel2);
+    ////  addObject(treeModel2);
 
   /*Triangle* triangle = new Triangle();
     triangle->setShaderProgram(shader1);
@@ -150,6 +148,7 @@ void Scene::render() {
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
     for (DrawableObject* object : objects) {
         glm::mat4 modelMatrix = object->getModelMatrix();
+        object->getShaderProgram()->use();
         object->getShaderProgram()->setUniformMatrix4fv("modelMatrix", glm::value_ptr(modelMatrix));
         object->getShaderProgram()->setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
         object->getShaderProgram()->setUniformMatrix4fv("projectionMatrix", glm::value_ptr(projectionMatrix));

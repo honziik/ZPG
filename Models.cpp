@@ -42,7 +42,6 @@ int Models::getVertexCount() {
 
 void Models::draw()
 {
-    getShaderProgram()->use();
     glBindVertexArray(this->getVAO());
     glDrawArrays(GL_TRIANGLES, 0, this->getVertexCount());
     // Unbind VAO
