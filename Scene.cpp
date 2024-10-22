@@ -7,23 +7,9 @@
 #include "Scale.cpp"
 #include "Rotate.cpp"
 
-Scene::Scene() {
-   /*       basic shader :D
-   ShaderProgram* shader1 = new ShaderProgram(
-        "#version 330 core\n"
-        "layout(location = 0) in vec3 position;\n"
-        "void main() {\n"
-        "    gl_Position =  vec4(position, 1.0);\n"
-        "}",
-        "#version 330\n"
-        "out vec4 frag_colour;"
-        "void main () {"
-        "     frag_colour = vec4 (0.5, 0.0, 0.5, 1.0);"
-        "}"
-    );*/
-
-
-    ShaderProgram* shader2 = new ShaderProgram(
+Scene::Scene(Camera* camera) {
+    this->camera = camera;
+    ShaderProgram* barevny = new ShaderProgram(
         "#version 330 core\n"
         "layout(location = 0) in vec3 vp;  // Vertex position\n"
         "layout(location = 1) in vec3 vn;  // Vertex normal\n"
@@ -52,10 +38,11 @@ Scene::Scene() {
         "void main() {\n"
         "vec3 color = normalize(fragNormal) * 0.5 + 0.5;  // Simple shading\n" 
         "frag_colour = vec4(color, 1.0);\n"
-        "}\n"
+        "}\n",
+        camera
     );
 
-    ShaderProgram* shader3 = new ShaderProgram(
+    ShaderProgram* zeleny = new ShaderProgram(
         "#version 330 core\n"
         "layout(location = 0) in vec3 vp;  // Vertex position\n"
         "layout(location = 1) in vec3 vn;  // Vertex normal\n"
@@ -83,76 +70,83 @@ Scene::Scene() {
 
         "void main() {\n"
         "frag_colour = vec4(0.4f,0.5f,0.12f, 1.0);  // RED shader\n"
-        "}\n"
+        "}\n",
+        camera
     );
 
-    GLint idModelTransform = shader2->getUniformLocation("modelMatrix");
+    shaders.push_back(barevny);
+    shaders.push_back(zeleny);
+
+    GLint idModelTransform = barevny->getUniformLocation("modelMatrix");
     if (idModelTransform == -1) {
         std::cerr << "Warning: uniform 'modelMatrix' not found in shader." << std::endl;
     }
     
-    Models* treeModel = new Models(tree, 92814, true);
-    treeModel->setShaderProgram(shader2);
+    for (int i = 0; i < 50; ++i) {
+        Models* treeModel = new Models(tree, 92814, true);
+        treeModel->setShaderProgram(barevny);
 
-  //  Models* treeModel2 = new Models(tree, 92814, true);
-  ////  treeModel2->setShaderProgram(shader3);
+        CompositeTransform* treeTransform = new CompositeTransform();
 
-    Models* bush = new Models(bushes, 8730, true);
-    bush->setShaderProgram(shader3);
+        float x = static_cast<float>(rand() % 100 - 50); // náhodné x mezi -50 a 50
+        float z = static_cast<float>(rand() % 100 - 50); // náhodné z mezi -50 a 50
+        treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
+        float size = fmod(x, 4.0f); // Zbytek po dìlení 4
+        if (size < 0) size *= -1;   // Zajistit, že velikost je kladná
+        size = std::max(size, 4.5f); // Zajistit minimální velikost (napø. 0.5)
 
-    CompositeTransform* compositeTransform1 = new CompositeTransform();
-    compositeTransform1->addTransform(new Scale(glm::vec3(4.0f, 4.0f, 4.0f)));
+        treeTransform->addTransform(new Scale(glm::vec3(size, size, size))); 
 
-    CompositeTransform* compositeTransform2 = new CompositeTransform();
-    compositeTransform2->addTransform(new Translate(glm::vec3(1.0f, 0.0f, 0.0f)));
+        treeModel->setTransform(treeTransform);
+        addObject(treeModel);
+    }
 
-    CompositeTransform* compositeTransform3 = new CompositeTransform();
-    compositeTransform3->addTransform(new Translate(glm::vec3(1.0f, 0.0f, 0.0f)));
+    for (int i = 0; i < 50; ++i) {
+        Models* bushModel = new Models(bushes, 8730, true);
+        bushModel->setShaderProgram(zeleny);
 
-    bush->setTransform(compositeTransform1);
-    treeModel->setTransform(compositeTransform2);
-    //// treeModel2->setTransform(compositeTransform3);
+        CompositeTransform* bushTransform = new CompositeTransform();
 
-    addObject(treeModel);
-    addObject(bush);
-    ////  addObject(treeModel2);
+        float x = static_cast<float>(rand() % 100 - 50); // náhodné x mezi -50 a 50
+        float z = static_cast<float>(rand() % 100 - 50); // náhodné z mezi -50 a 50
+        bushTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
-  /*Triangle* triangle = new Triangle();
-    triangle->setShaderProgram(shader1);
-    addObject(triangle);*/
+        float size = fmod(x, 3.0f); // Zbytek po dìlení 3 (pro keøe)
+        if (size < 0) size *= -1;   // Zajistit, že velikost je kladná
+        size = std::max(size, 4.5f); // Zajistit minimální velikost (napø. 0.5)
+
+        bushTransform->addTransform(new Scale(glm::vec3(size, size, size))); // Velikost keøe se mìní podle x
+
+        bushModel->setTransform(bushTransform);
+        addObject(bushModel);
+    }
+
 }
 
 void Scene::addObject(DrawableObject* object) {
     objects.push_back(object);
 }
 
-void Scene::setCamera(Camera* camera)
+void Scene::init()
 {
-    this->camera = camera;
+    for (ShaderProgram* shaderProgram : shaders) {
+        camera->addObserver(shaderProgram);
+    }
 }
 
 void Scene::render() {
-    /*glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);  // Example camera position
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 3.0f, 0.0f);  // Look at the origin
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);  // Up vector
-
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);*/
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);  // Example camera position
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 3.0f, 0.0f);  // Look at the origin
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);  // Up vector
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
-    // Set up projection matrix (perspective)
-
-    float aspectRatio = 800.0f / 600.0f;  
+ 
+    float aspectRatio = 1600.0f / 1200.0f;
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
+
     for (DrawableObject* object : objects) {
         glm::mat4 modelMatrix = object->getModelMatrix();
         object->getShaderProgram()->use();
         object->getShaderProgram()->setUniformMatrix4fv("modelMatrix", glm::value_ptr(modelMatrix));
-        object->getShaderProgram()->setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
+        camera->notifyObservers();
         object->getShaderProgram()->setUniformMatrix4fv("projectionMatrix", glm::value_ptr(projectionMatrix));
-        // Vykresli objekt
+       
         object->draw();
     }
 }

@@ -1,10 +1,12 @@
 
 #include "ShaderProgram.h"
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
-ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string& fragmentShader) {
+ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string& fragmentShader, Camera* camera) {
     GLuint vertex = compileShader(GL_VERTEX_SHADER, vertexShader);
     GLuint fragment = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+    this->camera = camera;
 
     id = glCreateProgram();
     glAttachShader(id, vertex);
@@ -33,7 +35,7 @@ ShaderProgram::~ShaderProgram() {
 }
 
 void ShaderProgram::use() {
-    if (id != 0) {  // Check if the shader program is valid (linked correctly)
+    if (id != 0) { 
         glUseProgram(id);
     }
     else {
@@ -74,3 +76,10 @@ void ShaderProgram::setUniformMatrix4fv(const std::string& name, const GLfloat* 
         std::cerr << "Warning: uniform '" << name << "' not found." << std::endl;
     }
 }
+
+void ShaderProgram::update()
+{
+    glm::mat4 viewMatrix = camera->getViewMatrix();
+    setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
+}
+

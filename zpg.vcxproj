@@ -139,7 +139,6 @@
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Translate.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -155,8 +154,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Models.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Tree.h" />

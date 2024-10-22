@@ -10,16 +10,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Models.h"
-#include "Camera.h"
+#include "Camera.cpp"
 
 class Scene {
 public:
-    Scene();
+    Scene(Camera* camera);
     void render();
     void addObject(DrawableObject* object);
-    void setCamera(Camera* camera);
+    void init();
 
 private:
     std::vector<DrawableObject*> objects;
+    std::vector<ShaderProgram*> shaders;
     Camera* camera;
 };
