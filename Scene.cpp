@@ -6,10 +6,11 @@
 #include "Translate.cpp"
 #include "Scale.cpp"
 #include "Rotate.cpp"
+#include "Square.h"
 
 Scene::Scene(Camera* camera) {
     this->camera = camera;
-    ShaderProgram* barevny = new ShaderProgram(
+    ShaderProgram* colorful = new ShaderProgram(
         "#version 330 core\n"
         "layout(location = 0) in vec3 vp;  // Vertex position\n"
         "layout(location = 1) in vec3 vn;  // Vertex normal\n"
@@ -42,7 +43,7 @@ Scene::Scene(Camera* camera) {
         camera
     );
 
-    ShaderProgram* zeleny = new ShaderProgram(
+    ShaderProgram* green = new ShaderProgram(
         "#version 330 core\n"
         "layout(location = 0) in vec3 vp;  // Vertex position\n"
         "layout(location = 1) in vec3 vn;  // Vertex normal\n"
@@ -69,22 +70,56 @@ Scene::Scene(Camera* camera) {
         "out vec4 frag_colour;  // Output color\n"
 
         "void main() {\n"
-        "frag_colour = vec4(0.4f,0.5f,0.12f, 1.0);  // RED shader\n"
+        "frag_colour = vec4(0.4f,0.5f,0.12f, 1.0);  \n"
         "}\n",
         camera
     );
 
-    shaders.push_back(barevny);
-    shaders.push_back(zeleny);
+    ShaderProgram* brown = new ShaderProgram(
+        "#version 330 core\n"
+        "layout(location = 0) in vec3 vp;  // Vertex position\n"
+        "layout(location = 1) in vec3 vn;  // Vertex normal\n"
 
-    GLint idModelTransform = barevny->getUniformLocation("modelMatrix");
+        "out vec3 fragPos;   // Fragment position (to pass to fragment shader)\n"
+        "out vec3 fragNormal;  // Normal (to pass to fragment shader)\n"
+
+        "uniform mat4 modelMatrix;      // Model transformation matrix\n"
+        "uniform mat4 viewMatrix;       // View (camera) transformation matrix\n"
+        "uniform mat4 projectionMatrix; // Projection matrix (perspective or orthographic)\n"
+
+        "void main() {\n"
+        "fragNormal = mat3(transpose(inverse(modelMatrix))) * vn;  // Transform normal to world space\n"
+        "   fragPos = vec3(modelMatrix * vec4(vp, 1.0));  // Transform vertex position to world space\n"
+        "   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vp, 1.0);  // Final transformed position\n"
+        "}\n"
+        ,
+
+        "#version 330 core\n"
+
+        "in vec3 fragNormal;  // Normal from vertex shader\n"
+        "in vec3 fragPos;     // Position from vertex shader\n"
+
+        "out vec4 frag_colour;  // Output color\n"
+
+        "void main() {\n"
+        "frag_colour = vec4(0.164f,0.042f,0.042f, 1.0);  \n"
+        "}\n",
+        camera
+    );
+
+    shaders.push_back(colorful);
+    shaders.push_back(green);
+    shaders.push_back(brown);
+
+
+    GLint idModelTransform = colorful->getUniformLocation("modelMatrix");
     if (idModelTransform == -1) {
         std::cerr << "Warning: uniform 'modelMatrix' not found in shader." << std::endl;
     }
     
     for (int i = 0; i < 50; ++i) {
         Models* treeModel = new Models(tree, 92814, true);
-        treeModel->setShaderProgram(barevny);
+        treeModel->setShaderProgram(colorful);
 
         CompositeTransform* treeTransform = new CompositeTransform();
 
@@ -92,9 +127,7 @@ Scene::Scene(Camera* camera) {
         float z = static_cast<float>(rand() % 100 - 50); // náhodné z mezi -50 a 50
         treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
-        float size = fmod(x, 4.0f); // Zbytek po dìlení 4
-        if (size < 0) size *= -1;   // Zajistit, že velikost je kladná
-        size = std::max(size, 4.5f); // Zajistit minimální velikost (napø. 0.5)
+        float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (2.0f)));
 
         treeTransform->addTransform(new Scale(glm::vec3(size, size, size))); 
 
@@ -104,7 +137,7 @@ Scene::Scene(Camera* camera) {
 
     for (int i = 0; i < 50; ++i) {
         Models* bushModel = new Models(bushes, 8730, true);
-        bushModel->setShaderProgram(zeleny);
+        bushModel->setShaderProgram(green);
 
         CompositeTransform* bushTransform = new CompositeTransform();
 
@@ -112,15 +145,18 @@ Scene::Scene(Camera* camera) {
         float z = static_cast<float>(rand() % 100 - 50); // náhodné z mezi -50 a 50
         bushTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
-        float size = fmod(x, 3.0f); // Zbytek po dìlení 3 (pro keøe)
-        if (size < 0) size *= -1;   // Zajistit, že velikost je kladná
-        size = std::max(size, 4.5f); // Zajistit minimální velikost (napø. 0.5)
+        float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (3.0f)));
 
-        bushTransform->addTransform(new Scale(glm::vec3(size, size, size))); // Velikost keøe se mìní podle x
+        bushTransform->addTransform(new Scale(glm::vec3(size, size, size)));
 
         bushModel->setTransform(bushTransform);
         addObject(bushModel);
     }
+
+    Models* grass = new Models(square, 6, true);
+    grass->setShaderProgram(brown);
+
+    addObject(grass);
 
 }
 

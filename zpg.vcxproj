@@ -157,6 +157,7 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Square.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Triangle.h" />

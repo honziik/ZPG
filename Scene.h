@@ -2,7 +2,6 @@
 
 #include<vector>
 #include "DrawableObject.h"
-#include "Triangle.h"
 #include "Tree.h"
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp> 

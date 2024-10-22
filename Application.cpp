@@ -2,9 +2,9 @@
 #include <iostream>
 #include "Camera.cpp"
 
-Camera* camera;  // Globální kamera (pouze pro pøíklad)
+Camera* camera;  
 bool firstMouse = true;
-float lastX = 400, lastY = 300;  // Inicializace pro sledování pozice myši
+float lastX = 400, lastY = 300;  
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     if (firstMouse) {
@@ -14,7 +14,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     }
 
     float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;  // Obrácený smìr y, protože pohyb myši dolù znamená rotaci nahoru
+    float yoffset = lastY - ypos;  
 
     lastX = xpos;
     lastY = ypos;
@@ -22,7 +22,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     camera->processMouseMovement(xoffset, yoffset);
 }
 
-// Callback pro zpracování vstupu z klávesnice
 void processInput(GLFWwindow* window, float deltaTime) {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera->processKeyboard('W', deltaTime);
@@ -32,6 +31,8 @@ void processInput(GLFWwindow* window, float deltaTime) {
         camera->processKeyboard('A', deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera->processKeyboard('D', deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
 
 void APIENTRY openglDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
