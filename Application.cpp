@@ -2,7 +2,8 @@
 #include <iostream>
 #include "Camera.cpp"
 
-Camera* camera;  
+SceneManager* sceneManager;
+Camera* camera;
 bool firstMouse = true;
 float lastX = 400, lastY = 300;  
 
@@ -33,6 +34,8 @@ void processInput(GLFWwindow* window, float deltaTime) {
         camera->processKeyboard('D', deltaTime);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        sceneManager->switchScene();
 }
 
 void APIENTRY openglDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
@@ -66,8 +69,10 @@ Application::Application() {
     glEnable(GL_DEPTH_TEST);
     glDebugMessageCallback(openglDebugCallback, nullptr);
     glViewport(0, 0, 1600, 1200);
+    sceneManager = new SceneManager();
     camera = new Camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
-    scene = new Scene(camera);
+    Scene* scene = new Scene(camera);
+    sceneManager->addScene(scene);
     glfwSetCursorPosCallback(window, mouse_callback);
     scene->init();
 }
@@ -84,7 +89,8 @@ void Application::run() {
 
         processInput(glfwGetCurrentContext(), deltaTime);
 
-        scene->render();
+        Scene* currentScene = sceneManager->getCurrentScene();
+        currentScene->render();
 
         glfwSwapBuffers(glfwGetCurrentContext());
         glfwPollEvents();
@@ -92,6 +98,6 @@ void Application::run() {
 }
 
 Application::~Application() {
-    delete scene;
+    delete sceneManager;
     glfwTerminate();
 }

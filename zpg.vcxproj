@@ -139,6 +139,7 @@
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Translate.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Models.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Transform.h" />

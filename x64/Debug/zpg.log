@@ -1,2 +1,13 @@
-﻿  Scene.cpp
+﻿  Application.cpp
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(12,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(13,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(17,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(18,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(20,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(21,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(84,28): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+  Scene.cpp
+  SceneManager.cpp
+  main.cpp
+  Generování kódu...
   zpg.vcxproj -> C:\Users\User\source\repos\zpg\x64\Debug\zpg.exe

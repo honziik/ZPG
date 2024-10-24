@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Scene.h"
+#include "SceneManager.h"
 
 class Application {
 public:
@@ -10,6 +10,4 @@ public:
     ~Application();
     void run();
 
-private:
-    Scene* scene; 
 };

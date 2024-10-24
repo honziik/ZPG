@@ -160,6 +160,7 @@ Scene::Scene(Camera* camera) {
 
 }
 
+
 void Scene::addObject(DrawableObject* object) {
     objects.push_back(object);
 }
