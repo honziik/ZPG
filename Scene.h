@@ -16,6 +16,7 @@ public:
     Scene(Camera* camera);
     void render();
     void addObject(DrawableObject* object);
+    void addShader(ShaderProgram* shader);
     void init();
 
 private:
