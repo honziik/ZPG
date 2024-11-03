@@ -28,6 +28,11 @@ void Scene::init()
     }
 }
 
+Camera* Scene::getCamera()
+{
+    return this->camera;
+}
+
 void Scene::render() {
  
     float aspectRatio = 1600.0f / 1200.0f;
@@ -39,7 +44,6 @@ void Scene::render() {
         object->getShaderProgram()->setUniformMatrix4fv("modelMatrix", glm::value_ptr(modelMatrix));
         camera->notifyObservers();
         object->getShaderProgram()->setUniformMatrix4fv("projectionMatrix", glm::value_ptr(projectionMatrix));
-       
         object->draw();
     }
 }

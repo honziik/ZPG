@@ -7,9 +7,9 @@
 class SceneFactory
 {
 public:
-	static Scene* createFirstScene(Camera* camera);
-	static Scene* createSecondScene(Camera* camera);
-	static Scene* createThirdScene(Camera* camera);
-	static Scene* createFourthScene(Camera* camera);
+	static Scene* createFirstScene();
+	static Scene* createSecondScene();
+	static Scene* createThirdScene();
+	static Scene* createFourthScene();
 };
 

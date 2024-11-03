@@ -7,7 +7,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string&
     GLuint vertex = compileShader(GL_VERTEX_SHADER, vertexShader);
     GLuint fragment = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
     this->camera = camera;
-
+    this->light = nullptr;
     id = glCreateProgram();
     glAttachShader(id, vertex);
     glAttachShader(id, fragment);
@@ -81,5 +81,25 @@ void ShaderProgram::update()
 {
     glm::mat4 viewMatrix = camera->getViewMatrix();
     setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
+    if (light != nullptr) {
+        setUniform3f("lightPosition", light->position.x, light->position.y, light->position.z);
+        setUniform3f("lightColor", light->color.x, light->color.y, light->color.z);
+    }
+}
+
+void ShaderProgram::setUniform3f(const std::string& name, float v0, float v1, float v2)
+{
+    GLuint location = getUniformLocation(name);
+    if (location != -1) {
+        glUniform3f(location, v0, v1, v2);
+    }
+    else {
+        std::cerr << "Warning: uniform '" << name << "' not found." << std::endl;
+    }
+}
+
+void ShaderProgram::setLight(Light* light)
+{
+    this->light = light;
 }
 

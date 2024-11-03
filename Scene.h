@@ -18,6 +18,7 @@ public:
     void addObject(DrawableObject* object);
     void addShader(ShaderProgram* shader);
     void init();
+    Camera* getCamera();
 
 private:
     std::vector<DrawableObject*> objects;

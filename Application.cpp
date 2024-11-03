@@ -4,7 +4,6 @@
 #include "SceneFactory.h"
 
 SceneManager* sceneManager;
-Camera* camera;
 bool firstMouse = true;
 float lastX = 400, lastY = 300;
 
@@ -13,6 +12,8 @@ float lastSwitchTime = 0.0f; // Èas posledního pøepnutí
 float switchDelay = 0.5f;    // Delay 0.5 sekundy
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    Scene* currentScene = sceneManager->getCurrentScene();
+    Camera* camera = currentScene->getCamera();
     if (firstMouse) {
         lastX = xpos;
         lastY = ypos;
@@ -30,6 +31,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
 void processInput(GLFWwindow* window, float deltaTime) {
     float currentTime = glfwGetTime();
+    Scene* currentScene = sceneManager->getCurrentScene();
+    Camera* camera = currentScene->getCamera();
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera->processKeyboard('W', deltaTime);
@@ -83,10 +86,10 @@ Application::Application() {
     glViewport(0, 0, 1600, 1200);
 
     sceneManager = new SceneManager();
-    camera = new Camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 
-    sceneManager->addScene(SceneFactory::createFirstScene(camera));
-    sceneManager->addScene(SceneFactory::createSecondScene(camera));
+    //sceneManager->addScene(SceneFactory::createFirstScene());
+    sceneManager->addScene(SceneFactory::createSecondScene());
+    sceneManager->addScene(SceneFactory::createThirdScene());
 
     glfwSetCursorPosCallback(window, mouse_callback);
 }

@@ -2,6 +2,7 @@ C:\Users\User\source\repos\zpg\zpg\Application.cpp;C:\Users\User\source\repos\zp
 C:\Users\User\source\repos\zpg\zpg\Camera.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Camera.obj
 C:\Users\User\source\repos\zpg\zpg\CompositTransform.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\CompositTransform.obj
 C:\Users\User\source\repos\zpg\zpg\DrawableObject.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DrawableObject.obj
+C:\Users\User\source\repos\zpg\zpg\Light.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Light.obj
 C:\Users\User\source\repos\zpg\zpg\main.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\main.obj
 C:\Users\User\source\repos\zpg\zpg\Models.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Models.obj
 C:\Users\User\source\repos\zpg\zpg\Rotate.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Rotate.obj
