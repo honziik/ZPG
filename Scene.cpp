@@ -40,9 +40,10 @@ void Scene::render() {
 
     for (DrawableObject* object : objects) {
         glm::mat4 modelMatrix = object->getModelMatrix();
+
+        camera->notifyObservers();
         object->getShaderProgram()->use();
         object->getShaderProgram()->setUniformMatrix4fv("modelMatrix", glm::value_ptr(modelMatrix));
-        camera->notifyObservers();
         object->getShaderProgram()->setUniformMatrix4fv("projectionMatrix", glm::value_ptr(projectionMatrix));
         object->draw();
     }

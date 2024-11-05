@@ -87,9 +87,11 @@ Application::Application() {
 
     sceneManager = new SceneManager();
 
-    //sceneManager->addScene(SceneFactory::createFirstScene());
+
+    sceneManager->addScene(SceneFactory::createFirstScene());
     sceneManager->addScene(SceneFactory::createSecondScene());
     sceneManager->addScene(SceneFactory::createThirdScene());
+    sceneManager->addScene(SceneFactory::createFourthScene());
 
     glfwSetCursorPosCallback(window, mouse_callback);
 }

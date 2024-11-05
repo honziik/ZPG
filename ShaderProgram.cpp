@@ -4,30 +4,14 @@
 #include <glm/gtc/type_ptr.hpp>
 
 ShaderProgram::ShaderProgram(const std::string& vertexShader, const std::string& fragmentShader, Camera* camera) {
-    GLuint vertex = compileShader(GL_VERTEX_SHADER, vertexShader);
-    GLuint fragment = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+    ShaderLoader shaderLoader(vertexShader.c_str(), fragmentShader.c_str(), &id);
+
     this->camera = camera;
     this->light = nullptr;
-    id = glCreateProgram();
-    glAttachShader(id, vertex);
-    glAttachShader(id, fragment);
-    glLinkProgram(id);
 
-    // Check if linking succeeded
-    GLint success;
-    glGetProgramiv(id, GL_LINK_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetProgramInfoLog(id, 512, nullptr, infoLog);
-        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-
-        // Ensure that the shader program is not used if linking fails
-        glDeleteProgram(id);
-        id = 0; // Reset program ID to indicate it is not valid
+    if (id == 0) {
+        std::cerr << "ERROR::SHADER::PROGRAM::CREATION_FAILED\n";
     }
-
-    glDeleteShader(vertex);
-    glDeleteShader(fragment);
 }
 
 ShaderProgram::~ShaderProgram() {
@@ -79,11 +63,13 @@ void ShaderProgram::setUniformMatrix4fv(const std::string& name, const GLfloat* 
 
 void ShaderProgram::update()
 {
+    use();
     glm::mat4 viewMatrix = camera->getViewMatrix();
     setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
     if (light != nullptr) {
         setUniform3f("lightPosition", light->position.x, light->position.y, light->position.z);
         setUniform3f("lightColor", light->color.x, light->color.y, light->color.z);
+        setUniform3f("viewPos", camera->position.x, camera->position.y, camera->position.z);
     }
 }
 
@@ -92,9 +78,6 @@ void ShaderProgram::setUniform3f(const std::string& name, float v0, float v1, fl
     GLuint location = getUniformLocation(name);
     if (location != -1) {
         glUniform3f(location, v0, v1, v2);
-    }
-    else {
-        std::cerr << "Warning: uniform '" << name << "' not found." << std::endl;
     }
 }
 

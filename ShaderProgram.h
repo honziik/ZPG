@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Camera.cpp"
 #include "Light.h"
+#include "ShaderLoader.h"
 
 class ShaderProgram : public Observer {
 public:
