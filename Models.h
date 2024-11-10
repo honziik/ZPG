@@ -12,16 +12,14 @@ class Models : public DrawableObject {
     public:
         Models(const float* vertices, int vertexCount, bool hasNormals);
         ~Models();
-
         GLuint getVAO();
         int getVertexCount();
         void draw();
-        void setTransform(Transform* t);
         glm::mat4 getModelMatrix();
+        Transform* transform;
 
     private:
         GLuint VBO;
         GLuint VAO;
         int vertexCount;
-        Transform* transform;
 };

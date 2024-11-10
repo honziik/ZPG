@@ -11,5 +11,7 @@ public:
 	static Scene* createSecondScene();
 	static Scene* createThirdScene();
 	static Scene* createFourthScene();
+	static Scene* createFifthScene();
+
 };
 

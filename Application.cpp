@@ -11,6 +11,8 @@ float lastX = 400, lastY = 300;
 float lastSwitchTime = 0.0f; // Èas posledního pøepnutí
 float switchDelay = 0.5f;    // Delay 0.5 sekundy
 
+float aspectRatio = 1600.0f / 1200.0f;
+
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     Scene* currentScene = sceneManager->getCurrentScene();
     Camera* camera = currentScene->getCamera();
@@ -27,6 +29,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     lastY = ypos;
 
     camera->processMouseMovement(xoffset, yoffset);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+    aspectRatio = static_cast<float>(width) / height;
 }
 
 void processInput(GLFWwindow* window, float deltaTime) {
@@ -73,7 +80,7 @@ Application::Application() {
         exit(EXIT_FAILURE);
     }
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwMakeContextCurrent(window);
 
     if (glewInit() != GLEW_OK) {
@@ -85,14 +92,17 @@ Application::Application() {
     glDebugMessageCallback(openglDebugCallback, nullptr);
     glViewport(0, 0, 1600, 1200);
 
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
     sceneManager = new SceneManager();
 
-
+    //sceneManager->addScene(SceneFactory::createFifthScene());
+    
     sceneManager->addScene(SceneFactory::createFirstScene());
     sceneManager->addScene(SceneFactory::createSecondScene());
     sceneManager->addScene(SceneFactory::createThirdScene());
     sceneManager->addScene(SceneFactory::createFourthScene());
-
+    
     glfwSetCursorPosCallback(window, mouse_callback);
 }
 
@@ -109,7 +119,7 @@ void Application::run() {
         processInput(glfwGetCurrentContext(), deltaTime);
 
         Scene* currentScene = sceneManager->getCurrentScene();
-        currentScene->render();
+        currentScene->render(aspectRatio);
 
         glfwSwapBuffers(glfwGetCurrentContext());
         glfwPollEvents();

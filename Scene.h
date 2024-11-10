@@ -14,7 +14,7 @@
 class Scene {
 public:
     Scene(Camera* camera);
-    void render();
+    void render(float aspectRatio);
     void addObject(DrawableObject* object);
     void addShader(ShaderProgram* shader);
     void init();

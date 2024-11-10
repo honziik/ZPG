@@ -29,13 +29,13 @@ Scene* SceneFactory::createFirstScene()
 
 Scene* SceneFactory::createSecondScene()
 {
-    Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
+    Camera* camera = new Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 
     Scene* scene = new Scene(camera);
 
     ShaderProgram* colorful = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\colorVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\colorFragment.glsl",
+        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
+        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyFragment.glsl",
         camera
     );
 
@@ -54,6 +54,11 @@ Scene* SceneFactory::createSecondScene()
     scene->addShader(colorful);
     scene->addShader(green);
     scene->addShader(brown);
+     Light* light = new Light(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+    light->addObserver(colorful);
+
+
+    colorful->setLight(light);
 
 
     GLint idModelTransform = colorful->getUniformLocation("modelMatrix");
@@ -75,7 +80,7 @@ Scene* SceneFactory::createSecondScene()
 
         treeTransform->addTransform(new Scale(glm::vec3(size, size, size)));
 
-        treeModel->setTransform(treeTransform);
+        treeModel->transform = treeTransform;
         scene->addObject(treeModel);
     }
 
@@ -93,7 +98,7 @@ Scene* SceneFactory::createSecondScene()
 
         bushTransform->addTransform(new Scale(glm::vec3(size, size, size)));
 
-        bushModel->setTransform(bushTransform);
+        bushModel->transform = bushTransform;
         scene->addObject(bushModel);
     }
 
@@ -137,7 +142,7 @@ Scene* SceneFactory::createThirdScene()
         float z = (i / 2 == 0 ? -1.5f : 1.5f);
         treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
-        treeModel->setTransform(treeTransform);
+        treeModel->transform= treeTransform;
         scene->addObject(treeModel);
     }
     scene->init();
@@ -194,7 +199,7 @@ Scene* SceneFactory::createFourthScene()
         float x = (i % 2 == 0 ? -2.5f : 2.5f);
         float z = (i / 2 == 0 ? -2.5f : 2.5f);
         transform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
-        model->setTransform(transform);
+        model->transform=transform;
 
         switch (i) {
         case 0:
@@ -216,4 +221,9 @@ Scene* SceneFactory::createFourthScene()
 
     scene->init();
     return scene;
+}
+
+Scene* SceneFactory::createFifthScene()
+{
+    return nullptr;
 }

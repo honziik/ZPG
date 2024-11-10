@@ -1,10 +1,10 @@
 #include "Transform.h"
 class Rotate : public Transform {
 private:
-    float angle; 
     glm::vec3 axis;
 
 public:
+    float angle;
     Rotate(float angle, const glm::vec3& axis) : angle(angle), axis(axis) {}
 
     glm::mat4 getMatrix() const override {

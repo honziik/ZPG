@@ -49,11 +49,6 @@ void Models::draw()
 
 }
 
-void Models::setTransform(Transform* t)
-{
-    this->transform = t;
-}
-
 glm::mat4 Models::getModelMatrix()
 {
     return transform ? transform->getMatrix() : glm::mat4(1.0f);

@@ -1,11 +1,13 @@
 ﻿  Application.cpp
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(18,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(19,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(23,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(24,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(26,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(27,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(33,23): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(103,28): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(20,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(21,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(25,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(26,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(28,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(29,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(40,23): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(113,28): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+  main.cpp
+  Generování kódu...
 LINK : warning LNK4098: Výchozí knihovna MSVCRT je v konfliktu s použitím jiných knihoven. Použijte /NODEFAULTLIB:library.
   zpg.vcxproj -> C:\Users\User\source\repos\zpg\x64\Debug\zpg.exe

@@ -25,4 +25,15 @@ public:
             delete transform;
         }
     }
+
+    template <typename T>
+    T* getFirstTransform() {
+        for (Transform* t : transforms) {
+            T* targetTransform = dynamic_cast<T*>(t);
+            if (targetTransform) {
+                return targetTransform;
+            }
+        }
+        return nullptr;
+    }
 };

@@ -13,8 +13,6 @@ public:
     void setShaderProgram(ShaderProgram* shader);
     ShaderProgram* getShaderProgram();
     virtual glm::mat4 getModelMatrix() = 0;
-    virtual void setTransform(Transform* transform) = 0;
-
 private:
     ShaderProgram* shaderProgram;
 };
