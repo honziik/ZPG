@@ -5,21 +5,70 @@ in vec3 fragPos;      // Pozice fragmentu v prostoru světa
 
 out vec4 frag_colour; // Výstupní barva fragmentu
 
-uniform vec3 lightPosition; // Pozice světla v prostoru světa
-uniform vec3 lightColor;    // Barva světla
+// Uniformy pro světla
+uniform int numLights; // Počet světel
+
+struct Light {
+    vec3 position;  // Pozice světla nebo směr pro DirectionalLight
+    vec3 color;     // Barva světla
+    int type;       // Typ světla: 0 = PointLight, 1 = DirectionalLight, 2 = Spotlight
+    vec3 direction; // Pouze pro Directional a Spotlight
+    float innerCutoff; // Pouze pro Spotlight
+    float outerCutoff; // Pouze pro Spotlight
+    float constant; // Attenuace pro PointLight
+    float linear;   // Attenuace pro PointLight
+    float quadratic; // Attenuace pro PointLight
+};
+
+uniform Light lights[10]; // Pole světel (maximálně 10 světel)
+
+// Uniform pro kameru
+uniform vec3 viewPos; // Pozice kamery
 
 void main() {
-    vec3 norm = normalize(fragNormal);                  // Normalizace normály
-    vec3 lightDir = normalize(lightPosition - fragPos); // Směr světla
+    vec3 resultColor = vec3(0.0); // Akumulovaná barva všech světel
 
-    // Ambientní složka
-    vec3 ambient = 0.1 * lightColor * vec3(0.4, 0.8, 0.4); // Světle zelená ambientní barva
+    vec3 norm = normalize(fragNormal); // Normalizace normály
 
-    // Difuzní složka (Lambertův model)
-    float diff = max(dot(norm, lightDir), 0.0);          // Faktor difuzního osvětlení
-    vec3 diffuse = diff * lightColor * vec3(0.4, 0.8, 0.4); // Světle zelená difuzní barva
+    for (int i = 0; i < numLights; i++) {
+        vec3 lightDir;
+        float attenuation = 1.0; // Výchozí hodnota attenuace (pro DirectionalLight nepotřebná)
+        float distance = 0.0;
 
-    // Kombinace ambientní a difuzní složky
-    vec3 result = ambient + diffuse;
-    frag_colour = vec4(result, 1.0); // Výstupní barva fragmentu
+        if (lights[i].type == 0) { // PointLight
+            lightDir = normalize(lights[i].position - fragPos);
+            distance = length(lights[i].position - fragPos);
+            attenuation = 1.0 / (lights[i].constant + lights[i].linear * distance + lights[i].quadratic * distance * distance);
+        } else if (lights[i].type == 1) { // DirectionalLight
+            lightDir = normalize(-lights[i].direction);
+        } else if (lights[i].type == 2) { // Spotlight
+            lightDir = normalize(lights[i].position - fragPos);
+            float theta = dot(lightDir, normalize(-lights[i].direction));
+            float epsilon = lights[i].outerCutoff - lights[i].innerCutoff;
+            float intensity = clamp((theta - lights[i].innerCutoff) / epsilon, 0.0, 1.0);
+            attenuation *= intensity;
+        }
+
+        // Ambientní složka
+        vec3 ambient = 0.1 * lights[i].color;
+
+        // Difuzní složka (Lambertův model)
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = diff * lights[i].color;
+
+        // Spekulární složka (pro případné lesklé povrchy)
+        vec3 viewDir = normalize(viewPos - fragPos);
+        vec3 reflectDir = reflect(-lightDir, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
+        vec3 specular = spec * lights[i].color;
+
+        // Aplikace attenuace
+        diffuse *= attenuation;
+        specular *= attenuation;
+
+        // Přidání osvětlení tohoto světla do výsledné barvy
+        resultColor += (ambient + diffuse + specular);
+    }
+
+    frag_colour = vec4(resultColor, 1.0); // Výstupní barva fragmentu
 }

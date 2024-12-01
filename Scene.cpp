@@ -7,11 +7,14 @@
 #include "Scale.cpp"
 #include "Rotate.cpp"
 #include "Square.h"
+#include "Firefly.h"
 
 float rotationSpeed = glm::radians(1.0f);
 
 Scene::Scene(Camera* camera) {
     this->camera = camera;
+    this->skybox = nullptr;
+    this->isNotSkybox = false; 
 }
 
 void Scene::addObject(DrawableObject* object) {
@@ -34,16 +37,35 @@ Camera* Scene::getCamera()
 {
     return this->camera;
 }
+void Scene::addSkybox(Skybox* skybox)
+{
+    this->skybox = skybox;
+}
+void Scene::changeSkybox()
+{
+    this->isNotSkybox = !this->isNotSkybox;
+}
 void Scene::render(float aspectRatio) {
- 
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), aspectRatio, 0.1f, 130.0f);
+
+    if (skybox) {
+        glm::mat4 viewMatrix = camera->getViewMatrix();
+        if (!isNotSkybox) {
+            viewMatrix = glm::mat4(glm::mat3(viewMatrix)); 
+        }
+
+        skybox->draw(viewMatrix, projectionMatrix, isNotSkybox);
+    }
 
     for (DrawableObject* object : objects) {
         glm::mat4 modelMatrix = object->getModelMatrix();
 
-        
+        Firefly* firefly = dynamic_cast<Firefly*>(object);
+        if (firefly) {
+            firefly->update();
+        }
         Models* modelObject = dynamic_cast<Models*>(object);
-        if (modelObject && modelObject->getVertexCount() == 92814 || modelObject->getVertexCount() == 2880) {
+        if (modelObject && modelObject->getVertexCount() == 92814) {
             CompositeTransform* compositeTransform = dynamic_cast<CompositeTransform*>(modelObject->transform);
 
             if (compositeTransform) {

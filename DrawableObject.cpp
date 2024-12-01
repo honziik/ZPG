@@ -8,3 +8,8 @@ ShaderProgram* DrawableObject::getShaderProgram()
 {
     return shaderProgram;
 }
+
+GLuint DrawableObject::getVAO()
+{
+    return this->VAO;
+}

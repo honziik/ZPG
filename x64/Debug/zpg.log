@@ -1,13 +1,2 @@
-﻿  Application.cpp
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(20,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(21,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(25,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(26,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(28,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(29,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(40,23): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\User\source\repos\zpg\zpg\Application.cpp(113,28): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-  main.cpp
-  Generování kódu...
-LINK : warning LNK4098: Výchozí knihovna MSVCRT je v konfliktu s použitím jiných knihoven. Použijte /NODEFAULTLIB:library.
+﻿  SceneFactory.cpp
   zpg.vcxproj -> C:\Users\User\source\repos\zpg\x64\Debug\zpg.exe

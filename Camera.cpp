@@ -22,7 +22,7 @@ public:
 
     Camera(glm::vec3 startPosition, glm::vec3 startUp, float startYaw, float startPitch)
         : position(startPosition), worldUp(startUp), yaw(startYaw), pitch(startPitch), movementSpeed(20.0f), mouseSensitivity(0.5f) {
-        front = glm::vec3(0.0f, 0.0f, -1.0f);
+        front = glm::vec3(0.0f, -1.0f, 0.0f);
         updateCameraVectors();
     }
 

@@ -1,27 +1,72 @@
 #version 330 core
 
-in vec3 fragNormal;   // Normal interpolated from the vertex shader
-in vec3 fragPos;      // Position of the fragment in world space
+in vec3 fragNormal;   // Normála interpolovaná z vertex shaderu
+in vec3 fragPos;      // Pozice fragmentu v prostoru světa
 
-out vec4 frag_colour; // Final output color
+out vec4 frag_colour; // Výstupní barva fragmentu
 
-uniform vec3 lightPosition; // Position of the light in world space
-uniform vec3 lightColor;    // Color of the light
-uniform vec3 viewPos;       // Position of the camera in world space
+// Uniformy pro světla
+uniform int numLights; // Počet světel
+
+struct Light {
+    vec3 position;  // Pozice světla nebo směr pro DirectionalLight
+    vec3 color;     // Barva světla
+    int type;       // Typ světla: 0 = PointLight, 1 = DirectionalLight, 2 = Spotlight
+    vec3 direction; // Pouze pro Directional a Spotlight
+    float innerCutoff; // Pouze pro Spotlight
+    float outerCutoff; // Pouze pro Spotlight
+    float constant; // Attenuace pro PointLight
+    float linear;   // Attenuace pro PointLight
+    float quadratic; // Attenuace pro PointLight
+};
+
+uniform Light lights[10]; // Pole světel (maximálně 10 světel)
+uniform vec3 viewPos;     // Pozice kamery
 
 void main() {
-    vec3 norm = normalize(fragNormal);                     // Normalize the normal vector
-    vec3 lightDir = normalize(lightPosition - fragPos);    // Calculate the light direction
-    vec3 viewDir = normalize(viewPos - fragPos);           // Calculate the view direction
+    vec3 resultColor = vec3(0.0); // Akumulovaná barva všech světel
+    vec3 norm = normalize(fragNormal); // Normalizace normály
+    vec3 viewDir = normalize(viewPos - fragPos); // Směr kamery
 
-    // Diffuse component using Lambert's model
-    float diff = max(dot(norm, lightDir), 0.0); // Calculate the diffuse factor
-    vec3 diffuse = diff * lightColor * vec3(0.4, 0.6, 0.8); // Light blue color
+    for (int i = 0; i < numLights; i++) {
+        vec3 lightDir;
+        float attenuation = 1.0; // Výchozí hodnota attenuace
+        float distance = 0.0;
 
-    // Specular component (Blinn-Phong model)
-    vec3 halfwayDir = normalize(lightDir + viewDir); // Calculate the halfway vector
-    float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0); // Calculate the specular factor
-    vec3 specular = spec * lightColor; // Calculate the specular color
+        // Výpočet světla podle typu
+        if (lights[i].type == 0) { // PointLight
+            lightDir = normalize(lights[i].position - fragPos);
+            distance = length(lights[i].position - fragPos);
+            attenuation = 1.0 / (lights[i].constant + lights[i].linear * distance + lights[i].quadratic * distance * distance);
+        } else if (lights[i].type == 1) { // DirectionalLight
+            lightDir = normalize(-lights[i].direction);
+        } else if (lights[i].type == 2) { // Spotlight
+            lightDir = normalize(lights[i].position - fragPos);
+            float theta = dot(lightDir, normalize(-lights[i].direction));
+            float epsilon = lights[i].outerCutoff - lights[i].innerCutoff;
+            float intensity = clamp((theta - lights[i].innerCutoff) / epsilon, 0.0, 1.0);
+            attenuation *= intensity;
+        }
 
-    frag_colour = vec4(diffuse + specular, 1.0); // Output the final color
+        // Ambientní složka
+        vec3 ambient = 0.1 * lights[i].color;
+
+        // Difuzní složka
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = diff * lights[i].color;
+
+        // Spekulární složka (Blinn-Phong model)
+        vec3 halfwayDir = normalize(lightDir + viewDir); // Halfway vektor
+        float spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0); // Exponent pro lesk
+        vec3 specular = spec * lights[i].color;
+
+        // Aplikace attenuace
+        diffuse *= attenuation;
+        specular *= attenuation;
+
+        // Přidání výsledku tohoto světla
+        resultColor += (ambient + diffuse + specular);
+    }
+
+    frag_colour = vec4(resultColor, 1.0); // Výstupní barva fragmentu
 }

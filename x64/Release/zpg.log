@@ -1,0 +1,87 @@
+﻿  Application.cpp
+C:\Users\User\source\repos\zpg\zpg\Application.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  Camera.cpp
+  (kompilování zdrojového souboru Application.cpp)
+  
+C:\Users\User\source\repos\zpg\zpg\Camera.cpp(4,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  CompositTransform.cpp
+C:\Users\User\source\repos\zpg\zpg\Transform.h(2,10): error C1083: Nejde otevřít soubor zahrnout: glm/vec3.hpp: No such file or directory
+  (kompilování zdrojového souboru CompositTransform.cpp)
+  
+  DirectionalLight.cpp
+C:\Users\User\source\repos\zpg\zpg\Light.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru DirectionalLight.cpp)
+  
+  DrawableObject.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru DrawableObject.cpp)
+  
+  Firefly.cpp
+C:\Users\User\source\repos\zpg\zpg\Light.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru Firefly.cpp)
+  
+  Light.cpp
+C:\Users\User\source\repos\zpg\zpg\Light.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru Light.cpp)
+  
+  main.cpp
+C:\Users\User\source\repos\zpg\zpg\Application.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru main.cpp)
+  
+  Models.cpp
+C:\Users\User\source\repos\zpg\zpg\Models.h(2,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru Models.cpp)
+  
+  PointLight.cpp
+C:\Users\User\source\repos\zpg\zpg\Light.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru PointLight.cpp)
+  
+  Rotate.cpp
+C:\Users\User\source\repos\zpg\zpg\Transform.h(2,10): error C1083: Nejde otevřít soubor zahrnout: glm/vec3.hpp: No such file or directory
+  (kompilování zdrojového souboru Rotate.cpp)
+  
+  Scale.cpp
+C:\Users\User\source\repos\zpg\zpg\Transform.h(2,10): error C1083: Nejde otevřít soubor zahrnout: glm/vec3.hpp: No such file or directory
+  (kompilování zdrojového souboru Scale.cpp)
+  
+  Scene.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru Scene.cpp)
+  
+  SceneFactory.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru SceneFactory.cpp)
+  
+  SceneManager.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru SceneManager.cpp)
+  
+  ShaderLoader.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderLoader.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru ShaderLoader.cpp)
+  
+  ShaderProgram.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru ShaderProgram.cpp)
+  
+  Skybox.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru Skybox.cpp)
+  
+  SpotLight.cpp
+C:\Users\User\source\repos\zpg\zpg\Light.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru SpotLight.cpp)
+  
+  Texture.cpp
+C:\Users\User\source\repos\zpg\zpg\Texture.h(2,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru Texture.cpp)
+  
+  Kompilování...
+  Translate.cpp
+C:\Users\User\source\repos\zpg\zpg\Transform.h(2,10): error C1083: Nejde otevřít soubor zahrnout: glm/vec3.hpp: No such file or directory
+  (kompilování zdrojového souboru Translate.cpp)
+  
+  Triangle.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.h(3,10): error C1083: Nejde otevřít soubor zahrnout: GL/glew.h: No such file or directory
+  (kompilování zdrojového souboru Triangle.cpp)
+  

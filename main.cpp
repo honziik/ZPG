@@ -1,7 +1,6 @@
 ﻿#include "Application.h"
 
-int main(void)
-{
-    Application* app = new Application();
-    app->run();
+int main() {
+	Application* app = new Application();
+	app->run();
 }

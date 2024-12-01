@@ -1,10 +1,10 @@
-   #version 330 core
+#version 330 core
 
-   in vec3 fragNormal;  // Normal from vertex shader
-   in vec3 fragPos;     // Position from vertex shader
+in vec2 fragUV;  // Přijímá UV souřadnice z vertex shaderu
+out vec4 frag_colour;  // Výstupní barva fragmentu
 
-   out vec4 frag_colour;  // Output color
+uniform sampler2D grassTexture;  // Textura trávy
 
-   void main() {
-   frag_colour = vec4(0.164f,0.042f,0.042f, 1.0);  
-   }
+void main() {
+    frag_colour = vec4(texture(grassTexture, fragUV).rgb, 1.0);
+}

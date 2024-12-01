@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\User\source\repos\libs\glew-2.1.0\include;..\..\libs\glfw-3.4.bin.WIN64\include;..\..\libs\g-truc-glm-0af55cc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\User\source\repos\libs\soil-vc2012\soil\include;C:\Users\User\source\repos\libs\glew-2.1.0\include;..\..\libs\glfw-3.4.bin.WIN64\include;..\..\libs\assimp\include;..\..\libs\g-truc-glm-0af55cc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\libs\glew-2.1.0\lib\Release\x64;..\..\libs\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\libs\assimp\lib\x64\v141\Release;..\..\libs\soil-vc2012\soil\lib-vc2012\Platform_x64;..\..\libs\glew-2.1.0\lib\Release\x64;..\..\libs\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;soil.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,10 +133,13 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CompositTransform.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
+    <ClCompile Include="Firefly.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Models.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -144,29 +147,37 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Translate.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\gift.h" />
-    <ClInclude Include="..\..\..\..\Downloads\Models\Models\plain.h" />
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\sphere.h" />
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\suzi_flat.h" />
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\suzi_smooth.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bushes.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="Firefly.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Models.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="Plain.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Square.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Triangle.h" />

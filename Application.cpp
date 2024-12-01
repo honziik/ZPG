@@ -1,7 +1,4 @@
 #include "Application.h"
-#include <iostream>
-#include "Camera.cpp"
-#include "SceneFactory.h"
 
 SceneManager* sceneManager;
 bool firstMouse = true;
@@ -36,7 +33,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     aspectRatio = static_cast<float>(width) / height;
 }
 
-void processInput(GLFWwindow* window, float deltaTime) {
+void Application::processInput(GLFWwindow* window, float deltaTime) {
     float currentTime = glfwGetTime();
     Scene* currentScene = sceneManager->getCurrentScene();
     Camera* camera = currentScene->getCamera();
@@ -51,6 +48,11 @@ void processInput(GLFWwindow* window, float deltaTime) {
         camera->processKeyboard('D', deltaTime);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        if (currentTime - lastSwitchTime >= switchDelay) {
+            currentScene->changeSkybox();
+            lastSwitchTime = currentTime;
+        }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
         if (currentTime - lastSwitchTime >= switchDelay) {
             sceneManager->switchScene();
@@ -72,6 +74,7 @@ Application::Application() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     GLFWwindow* window = glfwCreateWindow(1600, 1200, "OpenGL Application", nullptr, nullptr);
     if (!window) {
@@ -97,9 +100,10 @@ Application::Application() {
     sceneManager = new SceneManager();
 
     //sceneManager->addScene(SceneFactory::createFifthScene());
-    
-    sceneManager->addScene(SceneFactory::createFirstScene());
     sceneManager->addScene(SceneFactory::createSecondScene());
+
+    sceneManager->addScene(SceneFactory::createFifthScene());
+    sceneManager->addScene(SceneFactory::createFirstScene());
     sceneManager->addScene(SceneFactory::createThirdScene());
     sceneManager->addScene(SceneFactory::createFourthScene());
     

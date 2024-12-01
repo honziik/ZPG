@@ -13,6 +13,12 @@ public:
     void setShaderProgram(ShaderProgram* shader);
     ShaderProgram* getShaderProgram();
     virtual glm::mat4 getModelMatrix() = 0;
+    Transform* transform;
+    GLuint getVAO();
+
+protected:
+    GLuint VBO;
+    GLuint VAO;
 private:
     ShaderProgram* shaderProgram;
 };

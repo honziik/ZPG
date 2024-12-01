@@ -12,7 +12,7 @@ uniform vec3 viewPos;         // Pozice kamery v prostoru světa
 
 void main() {
     // Ambientní složka
-    vec3 ambient = 0.2 * lightColor;
+    vec3 ambient = 0.02 * lightColor;
 
     // Difuzní složka (Lambertův model)
     vec3 norm = normalize(fragNormal);

@@ -10,7 +10,7 @@ uniform mat4 viewMatrix;       // View (camera) transformation matrix
 uniform mat4 projectionMatrix; // Projection matrix (perspective or orthographic)
 
 void main() {
-  fragNormal = mat3(transpose(inverse(modelMatrix))) * vn;  // Transform normal to world space
+  fragNormal = normalize(transpose(inverse(mat3(modelMatrix))) * vn);  // Transform normal to world space
   fragPos = vec3(modelMatrix * vec4(vp, 1.0));  // Transform vertex position to world space
   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vp, 1.0);  // Final transformed position
 }

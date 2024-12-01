@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Models.h"
 #include "Camera.cpp"
+#include "Skybox.h"
 
 class Scene {
 public:
@@ -19,9 +20,13 @@ public:
     void addShader(ShaderProgram* shader);
     void init();
     Camera* getCamera();
+    void addSkybox(Skybox* skybox);
+    void changeSkybox();
 
 private:
     std::vector<DrawableObject*> objects;
     std::vector<ShaderProgram*> shaders;
     Camera* camera;
+    Skybox* skybox;
+    bool isNotSkybox;
 };

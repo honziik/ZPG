@@ -1,25 +1,2 @@
-Přepínání scén za běhu (Ano/Ne) (kde a jak)
-
-a) Základní scéna (Ano/Ne) Ano
-
-b) Scéna s lesem (Ano/Ne) ano
-
-c) Scéna se čtyřmi kuličkami (Ano/Ne) ano
-
-d) Scéna pro demonstraci použití všech shaderů (Konstantní, Lambert, Phong a Blinn) (Ano/Ne) ano
-
-Světlo (Ano/Ne) (kde a jak máte naimplementováno, jak se updatuje změna světla) ano třída Light observer na shaderProgram
-
-Základní třídy (ShaderProgram, DrowableObject, Camera, Controller) (Ano/Ne) (kdo zodpovídá za vykreslování, kde jsou uloženy modely, shadery atd.) ano, scena má objekty, které se renderují v aplikaci
-
-Transformace (Composite pattern) (Ano/Ne) (Máte pro transformace základní třídy? Co a jak jste použili?) ano, návrhový vzor composit, třídy Rotate, Scale, Transform
-
-Základy OOP
-
-a) Encapsulation (zapouzdření) (Ano/Ne) (Kde a jak?) v Rotate používám private proměnné a public metody
-
-b) Inheritance (dědičnost) (Ano/Ne) (Kde a jak?) ano např při dědění z třídy Transform
-
-c) Polymorphism (polymorfismus neboli mnohotvárnost) (Ano/Ne) (Kde a jak?) ano např při dědění z třídy Transform
-
-Vertex a fragment shadery prosím uložte do textových souboru a použijte přiložený ShaderLoader pro jejich načítání (Ano/Ne) (Kde a jak jste použili?) Ano, použil jsem ShaderLoader v konstruktoru shaderProgramu
+mám všechno,
+omlouvám se za pozdní odevzdání, dělal jsem větší refaktor

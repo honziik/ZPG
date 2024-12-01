@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.41.34120.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/user/source/repos/zpg/zpg/shaderloader.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "1995698a29bf4e0d7f12cabd3f88fe4d04a7ef738bc5885e1fb193e7888151a5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/user/source/repos/zpg/zpg/shaderloader.h"
+          },
+          "hashes": {
+            "sha-256": "a6ccff192bf8269b9f9eccce69baa0082ca3f0a5831cdffcfee13a1d1bd3c01e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/user/source/repos/libs/glew-2.1.0/include/gl/glew.h"
+          },
+          "hashes": {
+            "sha-256": "1a2d50dc00a69940838cb3b5413cf7a7ac3cee8078672f27ffbfa2d3b88ad344"
+          }
+        }
+      ]
+    }
+  ]
+}

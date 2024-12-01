@@ -1,10 +1,13 @@
 C:\Users\User\source\repos\zpg\zpg\Application.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Application.obj
 C:\Users\User\source\repos\zpg\zpg\Camera.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Camera.obj
 C:\Users\User\source\repos\zpg\zpg\CompositTransform.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\CompositTransform.obj
+C:\Users\User\source\repos\zpg\zpg\DirectionalLight.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DirectionalLight.obj
 C:\Users\User\source\repos\zpg\zpg\DrawableObject.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DrawableObject.obj
+C:\Users\User\source\repos\zpg\zpg\Firefly.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Firefly.obj
 C:\Users\User\source\repos\zpg\zpg\Light.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Light.obj
 C:\Users\User\source\repos\zpg\zpg\main.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\main.obj
 C:\Users\User\source\repos\zpg\zpg\Models.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Models.obj
+C:\Users\User\source\repos\zpg\zpg\PointLight.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\PointLight.obj
 C:\Users\User\source\repos\zpg\zpg\Rotate.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Rotate.obj
 C:\Users\User\source\repos\zpg\zpg\Scale.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Scale.obj
 C:\Users\User\source\repos\zpg\zpg\Scene.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Scene.obj
@@ -12,5 +15,8 @@ C:\Users\User\source\repos\zpg\zpg\SceneFactory.cpp;C:\Users\User\source\repos\z
 C:\Users\User\source\repos\zpg\zpg\SceneManager.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\SceneManager.obj
 C:\Users\User\source\repos\zpg\zpg\ShaderLoader.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\ShaderLoader.obj
 C:\Users\User\source\repos\zpg\zpg\ShaderProgram.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\ShaderProgram.obj
+C:\Users\User\source\repos\zpg\zpg\Skybox.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Skybox.obj
+C:\Users\User\source\repos\zpg\zpg\SpotLight.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\SpotLight.obj
+C:\Users\User\source\repos\zpg\zpg\Texture.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Texture.obj
 C:\Users\User\source\repos\zpg\zpg\Translate.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Translate.obj
 C:\Users\User\source\repos\zpg\zpg\Triangle.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Triangle.obj

@@ -63,6 +63,24 @@
     <ClCompile Include="ShaderLoader.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="Firefly.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -72,9 +90,6 @@
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\gift.h">
-      <Filter>Hlavičkové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Models\Models\plain.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Downloads\Models\Models\sphere.h">
@@ -107,9 +122,6 @@
     <ClInclude Include="Transform.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Hlavičkové soubory</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
@@ -129,6 +141,27 @@
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="ShaderLoader.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Plain.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Firefly.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
   </ItemGroup>
