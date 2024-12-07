@@ -1,7 +1,7 @@
 #include "Skybox.h"
 #include <iostream>
 
-Skybox::Skybox() : VAO(0), VBO(0), cubemapTexture(0), shader(nullptr) {}
+Skybox::Skybox(Camera* cameras) : VAO(0), VBO(0), cubemapTexture(0), shader(nullptr),camera(cameras) {}
 
 Skybox::~Skybox() {
     glDeleteVertexArrays(1, &VAO);
@@ -101,17 +101,26 @@ void Skybox::setShader(ShaderProgram* shader) {
     this->shader = shader;
 }
 
-void Skybox::draw(const glm::mat4& view, const glm::mat4& projection, bool followCamera) {
+void Skybox::update()
+{
+    viewMatrix = camera->getViewMatrix();
+}
+
+
+void Skybox::draw(bool followCamera) {
     shader->use();
 
-    glm::mat4 viewMatrix = followCamera ? view : glm::mat4(glm::mat3(view));
-    glDepthFunc(GL_LEQUAL); 
-    glDepthMask(GL_FALSE);
+    glm::mat4 viewMatrix2 = followCamera ? viewMatrix : glm::mat4(glm::mat3(viewMatrix));
+
+    if(!followCamera){
+        glDepthFunc(GL_LEQUAL);
+        glDepthMask(GL_FALSE);
+    }
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
     shader->setUniform1i("skybox", 0);
-    shader->setUniformMatrix4fv("view", glm::value_ptr(viewMatrix));
-    shader->setUniformMatrix4fv("projection", glm::value_ptr(projection));
+    shader->setUniformMatrix4fv("view", glm::value_ptr(viewMatrix2));
+    shader->setUniformMatrix4fv("projection", glm::value_ptr(camera->getProjectionMatrix()));
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 

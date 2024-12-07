@@ -19,6 +19,7 @@ public:
     float pitch;
     float movementSpeed;
     float mouseSensitivity = 10.0f;
+    float aspectRatio = 1600/1200;
 
     Camera(glm::vec3 startPosition, glm::vec3 startUp, float startYaw, float startPitch)
         : position(startPosition), worldUp(startUp), yaw(startYaw), pitch(startPitch), movementSpeed(20.0f), mouseSensitivity(0.5f) {
@@ -30,6 +31,9 @@ public:
         return glm::lookAt(position, position + front, up);
     }
 
+    glm::mat4 getProjectionMatrix() {
+        return glm::perspective(glm::radians(90.0f), aspectRatio, 0.1f, 130.0f);
+    }
     void processKeyboard(char direction, float deltaTime) {
         float velocity = movementSpeed * deltaTime;
         if (direction == 'W') position += front * velocity;

@@ -189,7 +189,6 @@ void Models::draw() {
     if (texture) {
         texture->bind();
     }
-
     if (hasIBO) {
         glUniform1i(getShaderProgram()->getUniformLocation("grassTexture") , 0);
         glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, NULL);

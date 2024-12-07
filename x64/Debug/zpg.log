@@ -1,2 +1,5 @@
-﻿  SceneFactory.cpp
+﻿  Camera.cpp
+  Scene.cpp
+  Skybox.cpp
+  Generování kódu...
   zpg.vcxproj -> C:\Users\User\source\repos\zpg\x64\Debug\zpg.exe

@@ -3,6 +3,7 @@ C:\Users\User\source\repos\zpg\zpg\Camera.cpp;C:\Users\User\source\repos\zpg\zpg
 C:\Users\User\source\repos\zpg\zpg\CompositTransform.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\CompositTransform.obj
 C:\Users\User\source\repos\zpg\zpg\DirectionalLight.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DirectionalLight.obj
 C:\Users\User\source\repos\zpg\zpg\DrawableObject.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DrawableObject.obj
+C:\Users\User\source\repos\zpg\zpg\DynamicRotate.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\DynamicRotate.obj
 C:\Users\User\source\repos\zpg\zpg\Firefly.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Firefly.obj
 C:\Users\User\source\repos\zpg\zpg\Light.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\Light.obj
 C:\Users\User\source\repos\zpg\zpg\main.cpp;C:\Users\User\source\repos\zpg\zpg\x64\Debug\main.obj

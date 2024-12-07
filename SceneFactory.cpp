@@ -6,6 +6,7 @@
 #include "PointLight.h"
 #include "Firefly.h"
 #include "Spotlight.h"
+#include "DynamicRotate.cpp"
 
 Scene* SceneFactory::createFirstScene()
 {
@@ -31,16 +32,18 @@ Scene* SceneFactory::createFirstScene()
 
 Scene* SceneFactory::createSecondScene()
 {
+    Camera* camera = new Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
     std::vector<std::string> faces = {
     "cubemap\\right.png", "cubemap\\left.png",
     "cubemap\\top.png", "cubemap\\bottom.png",
     "cubemap\\front.png", "cubemap\\back.png"
     };
 
-    Skybox* skybox = new Skybox();
+    Skybox* skybox = new Skybox(camera);
     skybox->init();
     skybox->loadCubemap(faces);
-    Camera* camera = new Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
+    camera->addObserver(skybox);
+
     ShaderProgram* skyboxs = new ShaderProgram(
         "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\skyboxV.glsl",
         "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\skyboxF.glsl",
@@ -87,7 +90,8 @@ Scene* SceneFactory::createSecondScene()
     Models* login = new Models("objects/logo.obj", "textures/grass2.png");
     login->setShaderProgram(brown);
     CompositeTransform* ct2 = new CompositeTransform();
-    house->transform = ct2;
+    ct2->addTransform(new Scale(glm::vec3(50.0f, 50.0f, 50.0f)));
+    login->transform = ct2;
     scene->addObject(login);
 
 
@@ -95,7 +99,7 @@ Scene* SceneFactory::createSecondScene()
     scene->addShader(grey);
     scene->addShader(green);
     scene->addShader(brown);
-    for(int i = 0; i <6 ; i++){
+   for (int i = 0; i <6; i++) {
         Firefly* light = new Firefly(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
         light->setShaderProgram(firefly);
         light->addObserver(grey);
@@ -116,12 +120,14 @@ Scene* SceneFactory::createSecondScene()
 
         float x = static_cast<float>(rand() % 80 - 40);
         float z = static_cast<float>(rand() % 80 - 40);
+        
+
         treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (2.0f)));
 
         treeTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-
+        treeTransform->addTransform(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
         treeModel->transform = treeTransform;
         scene->addObject(treeModel);
     }
@@ -143,7 +149,7 @@ Scene* SceneFactory::createSecondScene()
         bushModel->transform = bushTransform;
         scene->addObject(bushModel);
     }
-
+    
     Models* grass = new Models(square, 6, true, true);
     grass->setShaderProgram(brown);
     Texture* texture = new Texture();
@@ -302,7 +308,7 @@ Scene* SceneFactory::createFifthScene()
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (2.0f)));
 
         treeTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-
+        treeTransform->addTransform(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
         treeModel->transform = treeTransform;
         scene->addObject(treeModel);
     }

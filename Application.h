@@ -11,7 +11,7 @@ class Application {
 
 private:
     void processInput(GLFWwindow* window, float deltaTime);
-
+    bool cursorLocked;
 public:
     Application();
     ~Application();

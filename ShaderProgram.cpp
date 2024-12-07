@@ -71,7 +71,10 @@ void ShaderProgram::update() {
     if (location != -1) {
         setUniform1i("grassTexture", 0);
     }
-    setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
+    location = getUniformLocation("viewMatrix");
+    if (location != -1) {
+        setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
+    }
     // Pøedání kamerové pozice
     location = getUniformLocation("viewPos");
     if (location != -1) {
