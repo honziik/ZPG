@@ -1,7 +1,7 @@
 #version 330 core
 
-in vec2 fragUV;  // Přijímá UV souřadnice z vertex shaderu
-out vec4 frag_colour;  // Výstupní barva fragmentu
+in vec2 fragUV;
+out vec4 frag_colour;
 
 uniform sampler2D grassTexture; 
 

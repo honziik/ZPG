@@ -1,38 +1,36 @@
 #version 330 core
 
-in vec3 fragNormal;   // Normála interpolovaná z vertex shaderu
-in vec3 fragPos;      // Pozice fragmentu v prostoru světa
+in vec3 fragNormal;
+in vec3 fragPos; 
 
-out vec4 frag_colour; // Výstupní barva fragmentu
+out vec4 frag_colour;
 
-// Uniformy pro světla
-uniform int numLights; // Počet světel
+uniform int numLights;
 
 struct Light {
-    vec3 position;  // Pozice světla nebo směr pro DirectionalLight
-    vec3 color;     // Barva světla
-    int type;       // Typ světla: 0 = PointLight, 1 = DirectionalLight, 2 = Spotlight
-    vec3 direction; // Pouze pro Directional a Spotlight
-    float innerCutoff; // Pouze pro Spotlight
-    float outerCutoff; // Pouze pro Spotlight
-    float constant; // Attenuace pro PointLight
-    float linear;   // Attenuace pro PointLight
-    float quadratic; // Attenuace pro PointLight
+    vec3 position; 
+    vec3 color;    
+    int type;  
+    vec3 direction; 
+    float innerCutoff; 
+    float outerCutoff;
+    float constant;
+    float linear;   
+    float quadratic; 
 };
 
-uniform Light lights[10]; // Pole světel (maximálně 10 světel)
+uniform Light lights[10]; 
 
-// Uniform pro kameru
-uniform vec3 viewPos; // Pozice kamery
+uniform vec3 viewPos; 
 
 void main() {
-    vec3 resultColor = vec3(0.0); // Akumulovaná barva všech světel
+    vec3 resultColor = vec3(0.0);
 
-    vec3 norm = normalize(fragNormal); // Normalizace normály
+    vec3 norm = normalize(fragNormal);
 
     for (int i = 0; i < numLights; i++) {
         vec3 lightDir;
-        float attenuation = 1.0; // Výchozí hodnota attenuace (pro DirectionalLight nepotřebná)
+        float attenuation = 1.0;
         float distance = 0.0;
 
         if (lights[i].type == 0) { // PointLight
@@ -49,26 +47,23 @@ void main() {
             attenuation *= intensity;
         }
 
-        // Ambientní složka
         vec3 ambient = 0.1 * lights[i].color;
 
-        // Difuzní složka (Lambertův model)
+        // Difusse (Lambert model)
         float diff = max(dot(norm, lightDir), 0.0);
         vec3 diffuse = diff * lights[i].color;
 
-        // Spekulární složka (pro případné lesklé povrchy)
+        // Specular (shiny surface)
         vec3 viewDir = normalize(viewPos - fragPos);
         vec3 reflectDir = reflect(-lightDir, norm);
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
         vec3 specular = spec * lights[i].color;
 
-        // Aplikace attenuace
         diffuse *= attenuation;
         specular *= attenuation;
 
-        // Přidání osvětlení tohoto světla do výsledné barvy
         resultColor += (ambient + diffuse + specular);
     }
 
-    frag_colour = vec4(resultColor, 1.0); // Výstupní barva fragmentu
+    frag_colour = vec4(resultColor, 1.0); 
 }

@@ -75,7 +75,6 @@ private:
         newFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
         front = glm::normalize(newFront);
 
-        // Také aktualizuj vektory "right" a "up" podle nového smìru "front"
         right = glm::normalize(glm::cross(front, worldUp));
         up = glm::normalize(glm::cross(right, front));
     }

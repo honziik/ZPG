@@ -53,9 +53,9 @@ void ShaderProgram::setUniform4f(const std::string& name, float v0, float v1, fl
     glUniform4f(getUniformLocation(name), v0, v1, v2, v3);
 }
 void ShaderProgram::setUniformMatrix4fv(const std::string& name, const GLfloat* value) {
-    GLuint location = getUniformLocation(name);  // Najde umístìní uniformní promìnné
+    GLuint location = getUniformLocation(name);
     if (location != -1) {
-        glUniformMatrix4fv(location, 1, GL_FALSE, value);  // Nastaví matici
+        glUniformMatrix4fv(location, 1, GL_FALSE, value);
     }
     else {
         std::cerr << "Warning: uniform '" << name << "' not found." << std::endl;
@@ -65,7 +65,6 @@ void ShaderProgram::setUniformMatrix4fv(const std::string& name, const GLfloat* 
 void ShaderProgram::update() {
     use();
 
-    // Nastavení view matrix
     glm::mat4 viewMatrix = camera->getViewMatrix();
     GLuint location = getUniformLocation("grassTexture");
     if (location != -1) {
@@ -75,41 +74,36 @@ void ShaderProgram::update() {
     if (location != -1) {
         setUniformMatrix4fv("viewMatrix", glm::value_ptr(viewMatrix));
     }
-    // Pøedání kamerové pozice
     location = getUniformLocation("viewPos");
     if (location != -1) {
         setUniform3f("viewPos", camera->position.x, camera->position.y, camera->position.z);
     }
-    // Nastavení svìtel
     if (!lights.empty()) {
-        setUniform1i("numLights", lights.size()); // Poèet svìtel
+        setUniform1i("numLights", lights.size());
 
         for (size_t i = 0; i < lights.size(); ++i) {
             Light* light = lights[i];
 
-            // Složení názvu uniformy
             std::string baseName = "lights[" + std::to_string(i) + "]";
 
             setUniform3fv(baseName + ".position", light->getPosition());
             setUniform3f(baseName + ".color", light->getColor().x, light->getColor().y, light->getColor().z);
 
-            // Použijeme dynamic_cast pro urèení typu svìtla
             if (auto dirLight = dynamic_cast<DirectionalLight*>(light)) {
                 setUniform3f(baseName + ".direction", dirLight->getDirection().x, dirLight->getDirection().y, dirLight->getDirection().z);
-                setUniform1i(baseName + ".type", 1); // Typ svìtla: DirectionalLight
+                setUniform1i(baseName + ".type", 1);
             }
             else if (auto spotLight = dynamic_cast<Spotlight*>(light)) {
                 setUniform3fv(baseName + ".direction", spotLight->getDirection());
                 setUniform1f(baseName + ".innerCutoff", spotLight->getInnerCutoff());
                 setUniform1f(baseName + ".outerCutoff", spotLight->getOuterCutoff());
-                setUniform1i(baseName + ".type", 2); // Typ svìtla: Spotlight
+                setUniform1i(baseName + ".type", 2);
             }
             else if (auto pointLight = dynamic_cast<PointLight*>(light)) {
-                // Zde pøidáte specifické informace pro PointLight (napø. attenuaci)
                 setUniform1f(baseName + ".constant", pointLight->getConstant());
                 setUniform1f(baseName + ".linear", pointLight->getLinear());
                 setUniform1f(baseName + ".quadratic", pointLight->getQuadratic());
-                setUniform1i(baseName + ".type", 0); // Typ svìtla: PointLight
+                setUniform1i(baseName + ".type", 0);
             }
         }
     }
@@ -148,7 +142,7 @@ void ShaderProgram::setUniform3fv(const std::string& name, glm::vec3 value)
 }
 
 void ShaderProgram::setUniform3f(const std::string& name, float v0, float v1, float v2)
-{//todo tady vzdy useProgram a useProgram 0 potom  a mít material
+{
     GLuint location = getUniformLocation(name);
     if (location != -1) {
         glUniform3f(location, v0, v1, v2);

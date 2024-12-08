@@ -3,11 +3,10 @@
 Models::Models(const float* vertices, int vertexCount, bool hasNormals, bool hasUVs)
     : vertexCount(vertexCount), texture(nullptr), hasIBO(false), indexCount(0), IBO(0), indicesCount(0)
 {
-    int stride = 3; // Base stride (positions: x,y,z)
-    if (hasNormals) stride += 3; // Add normal coordinates (nx,ny,nz)
-    if (hasUVs) stride += 2;     // Add UV coordinates (s,t)
+    int stride = 3;
+    if (hasNormals) stride += 3;
+    if (hasUVs) stride += 2;     
 
-    // Generate and bind VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -24,7 +23,6 @@ Models::Models(const float* vertices, int vertexCount, bool hasNormals, bool has
 
     size_t offset = 3; // Start offset after position (x,y,z)
 
-    // Set normal attribute if available
     if (hasNormals) {
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride * sizeof(float),
@@ -32,14 +30,12 @@ Models::Models(const float* vertices, int vertexCount, bool hasNormals, bool has
         offset += 3; // Move offset past normals
     }
 
-    // Set UV attribute if available
     if (hasUVs) {
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride * sizeof(float),
             (GLvoid*)(offset * sizeof(float)));
     }
 
-    // Unbind VAO and VBO
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

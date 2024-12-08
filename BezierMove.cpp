@@ -23,13 +23,11 @@ public:
 
         t += deltaTime * speed;
 
-        // Pøechod mezi segmenty
         while (t > 1.0f) {
             t -= 1.0f;
             currentSegment = (currentSegment + 1) % segments.size();
         }
 
-        // Vypoèet aktuální pozice na aktuálním segmentu
         glm::vec3 position = computeBezierPoint(t, segments[currentSegment]);
         return glm::translate(glm::mat4(1.0f), position);
     }

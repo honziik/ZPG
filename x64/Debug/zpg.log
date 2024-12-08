@@ -1,8 +1,48 @@
-﻿  SceneFactory.cpp
+﻿  Application.cpp
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(14,11): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(15,11): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(19,16): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(20,16): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(22,10): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(23,10): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\Application.cpp(82,22): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+  BezierMove.cpp
+C:\Users\User\source\repos\zpg\zpg\BezierMove.cpp(20,27): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+  Camera.cpp
+  CompositTransform.cpp
+  Firefly.cpp
+  InputController.cpp
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(8,23): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(47,14): warning C4244: inicializování: double se převádí na int; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(55,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(56,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(57,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(75,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(76,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(77,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(95,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(96,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+C:\Users\User\source\repos\zpg\zpg\InputController.cpp(97,22): warning C4244: argument: double se převádí na GLint; může dojít ke ztrátě dat.
+  ModelFactory.cpp
+  Models.cpp
+  Rotate.cpp
+  Scene.cpp
+C:\Users\User\source\repos\zpg\zpg\BezierMove.cpp(20,27): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+  (kompilování zdrojového souboru Scene.cpp)
+  
+  SceneFactory.cpp
 C:\Users\User\source\repos\zpg\zpg\LinearMove.cpp(9,27): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
   (kompilování zdrojového souboru SceneFactory.cpp)
   
 C:\Users\User\source\repos\zpg\zpg\BezierMove.cpp(20,27): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
   (kompilování zdrojového souboru SceneFactory.cpp)
   
+  SceneManager.cpp
+  ShaderProgram.cpp
+C:\Users\User\source\repos\zpg\zpg\ShaderProgram.cpp(82,46): warning C4267: argument: Převod z: size_t na: int, může dojít ke ztrátě dat.
+  Skybox.cpp
+  Texture.cpp
+  main.cpp
+  Generování kódu...
+LINK : warning LNK4098: Výchozí knihovna MSVCRT je v konfliktu s použitím jiných knihoven. Použijte /NODEFAULTLIB:library.
   zpg.vcxproj -> C:\Users\User\source\repos\zpg\x64\Debug\zpg.exe

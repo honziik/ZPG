@@ -48,7 +48,6 @@ void Skybox::init() {
     -1.0f, 1.0f, 1.0f,
     1.0f,-1.0f, 1.0f
     };
-    // Generate and bind VAO and VBO for skybox
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -59,15 +58,14 @@ void Skybox::init() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (GLvoid*)0);
     glEnableVertexAttribArray(0);
 
-    glBindVertexArray(0);  // Unbind VAO and VBO
+    glBindVertexArray(0);
 }
 
 void Skybox::loadCubemap(const std::vector<std::string>& faces) {
     glGenTextures(1, &cubemapTexture);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 
-    // Force 16-bit or 32-bit internal format for better quality
-    GLint internalFormat = GL_RGBA16F;  // or GL_RGBA32F for even higher quality
+    GLint internalFormat = GL_RGBA16F;  
 
     int width, height, nrChannels;
     for (unsigned int i = 0; i < faces.size(); i++) {

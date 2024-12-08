@@ -138,6 +138,7 @@
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="DynamicRotate.cpp" />
     <ClCompile Include="Firefly.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LinearMove.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Firefly.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="ModelFactory.h" />
     <ClInclude Include="Models.h" />

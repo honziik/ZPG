@@ -39,7 +39,7 @@ void Firefly::changeTransform() {
     counter++;
 
    
-    float stepSize = 0.1f; // Menší krok
+    float stepSize = 0.1f;
     position += velocity * stepSize;
     if (position.y < 0.0f) {
         position.y = 0.1f;
@@ -48,7 +48,6 @@ void Firefly::changeTransform() {
         position.y = 14.9f;
     }
 
-    // Aktualizace transformace
     CompositeTransform* compositeTransform = dynamic_cast<CompositeTransform*>(this->transform);
     if (compositeTransform) {
         Translate* translateTransform = compositeTransform->getFirstTransform<Translate>();

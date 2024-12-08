@@ -1,11 +1,11 @@
 #version 330 core
 
-out vec4 FragColor;  // Finální barva fragmentu
+out vec4 FragColor;  // final color
 
-in vec3 FragPos;     // Pozice fragmentu ve světových souřadnicích
-in vec3 Normal;      // Normála fragmentu
+in vec3 FragPos; 
+in vec3 Normal;  
 
-uniform vec3 lightColor;  // Barva světla světlušky
+uniform vec3 lightColor; 
 
 void main()
 {

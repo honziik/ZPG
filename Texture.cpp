@@ -9,7 +9,7 @@ Texture::~Texture() {
 }
 
 void Texture::loadFromFile(const std::string& filePath) {
-    glGenTextures(1, &textureID);  // Vytvoøení textury
+    glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -18,13 +18,12 @@ void Texture::loadFromFile(const std::string& filePath) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);    // Nastavení parametrù textury
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     stbi_set_flip_vertically_on_load(1);
 
-    // Naèítání obrázku
     int width, height, nrChannels;
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
     if (data) {
