@@ -7,24 +7,31 @@
 #include "Firefly.h"
 #include "Spotlight.h"
 #include "DynamicRotate.cpp"
+#include "LinearMove.cpp"
+#include "BezierMove.cpp"
 
+
+//todo bezirova krivka + zmenit glsl soubory + vyjebat veci z aplikace
 Scene* SceneFactory::createFirstScene()
 {
     Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
     Scene* scene = new Scene(camera);
 
-    ShaderProgram* triangleShader = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greenVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greenFragment.glsl",
+    ShaderProgram* shader = new ShaderProgram(
+        "shaders/greenVertex.glsl",
+        "shaders/greenFragment.glsl",
         camera
     );
 
-    scene->addShader(triangleShader);
+    scene->addShader(shader);
 
+    const float triangle[] = {
+     0.0f,  0.5f, 0.0f,  0.0f,  0.0f,  1.0f,
+     -0.5f, -0.5f, 0.0f,  0.0f,  0.0f,  1.0f,
+     0.5f, -0.5f, 0.0f,  0.0f,  0.0f,  1.0f
+    };
 
-    Models* triangleModel = new Models(square, 6, false, false);
-    triangleModel->setShaderProgram(triangleShader);
-    scene->addObject(triangleModel);
+    scene->addObject(ModelFactory::createModel(triangle, 3, shader,{}));
     scene->init();
 
     return scene;
@@ -45,31 +52,30 @@ Scene* SceneFactory::createSecondScene()
     camera->addObserver(skybox);
 
     ShaderProgram* skyboxs = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\skyboxV.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\skyboxF.glsl",
+        "shaders/skyboxV.glsl",
+        "shaders/skyboxF.glsl",
         camera
     );
     skybox->setShader(skyboxs);
 
     Scene* scene = new Scene(camera);
     scene->addSkybox(skybox);
-    scene->addShader(skyboxs);
 
     ShaderProgram* grey = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyFragmentNew.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/greyFragmentNew.glsl",
         camera
     );
 
     ShaderProgram* green = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greenVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greenFragment.glsl",
+        "shaders/greenVertex.glsl",
+        "shaders/greenFragment.glsl",
         camera
     );
 
     ShaderProgram* brown = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\brownVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\brownFragment.glsl",
+        "shaders/brownVertex.glsl",
+        "shaders/brownFragment.glsl",
         camera
     );
 
@@ -78,27 +84,21 @@ Scene* SceneFactory::createSecondScene()
         "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\fireflyFragment.glsl",
         camera
     );
-
-
     ShaderProgram* newShader = new ShaderProgram("PhongVertexShader.glsl", "PhongFragmentShader.glsl", camera);
-    Models* house = new Models("objects/house.obj", "textures/house.png");
-    house->setShaderProgram(brown);
-    CompositeTransform* ct = new CompositeTransform();
-    house->transform = ct;
-    scene->addObject(house);
-
-    Models* login = new Models("objects/logo.obj", "textures/grass2.png");
-    login->setShaderProgram(brown);
-    CompositeTransform* ct2 = new CompositeTransform();
-    ct2->addTransform(new Scale(glm::vec3(50.0f, 50.0f, 50.0f)));
-    login->transform = ct2;
-    scene->addObject(login);
 
 
-    scene->addShader(firefly);
+    scene->addObject(ModelFactory::createModelFromObject("objects/house.obj", "textures/house.png", brown, {}));
+
+    std::vector<Transform*> transforms;
+    transforms.push_back(new Scale(glm::vec3(30.0f, 30.0f, 30.0f)));
+    scene->addObject(ModelFactory::createModelFromObject("objects/logo.obj", "textures/grass2.png", brown, transforms));
+
     scene->addShader(grey);
-    scene->addShader(green);
     scene->addShader(brown);
+    scene->addShader(firefly);
+    scene->addShader(green);
+    scene->addShader(skyboxs);
+
    for (int i = 0; i <6; i++) {
         Firefly* light = new Firefly(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
         light->setShaderProgram(firefly);
@@ -113,49 +113,31 @@ Scene* SceneFactory::createSecondScene()
     }
 
     for (int i = 0; i < 30; ++i) {
-        Models* treeModel = new Models(tree, 92814, true, false);
-        treeModel->setShaderProgram(grey);
-
-        CompositeTransform* treeTransform = new CompositeTransform();
-
         float x = static_cast<float>(rand() % 80 - 40);
         float z = static_cast<float>(rand() % 80 - 40);
         
-
-        treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
-
+        std::vector<Transform*> transforms;
+        transforms.push_back(new Translate(glm::vec3(x, 0.0f, z)));
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (2.0f)));
-
-        treeTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-        treeTransform->addTransform(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-        treeModel->transform = treeTransform;
-        scene->addObject(treeModel);
+        transforms.push_back(new Scale(glm::vec3(size, size, size)));
+        transforms.push_back(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+     
+        scene->addObject(ModelFactory::createModel(tree, 92814, grey, transforms));
     }
 
     for (int i = 0; i < 50; ++i) {
-        Models* bushModel = new Models(bushes, 8730, true, false);
-        bushModel->setShaderProgram(green);
-
-        CompositeTransform* bushTransform = new CompositeTransform();
-
+        std::vector<Transform*> transforms;
         float x = static_cast<float>(rand() % 100 - 50);
         float z = static_cast<float>(rand() % 100 - 50);
-        bushTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
+        transforms.push_back(new Translate(glm::vec3(x, 0.0f, z)));
 
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (3.0f)));
+        transforms.push_back(new Scale(glm::vec3(size, size, size)));
 
-        bushTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-
-        bushModel->transform = bushTransform;
-        scene->addObject(bushModel);
+        scene->addObject(ModelFactory::createModel(bushes, 8730, green, transforms));
     }
     
-    Models* grass = new Models(square, 6, true, true);
-    grass->setShaderProgram(brown);
-    Texture* texture = new Texture();
-    texture->loadFromFile("textures/grass2.png");
-    grass->setTexture(texture);
-    scene->addObject(grass);
+    scene->addObject(ModelFactory::createModelWithTexture(square, 6, brown, {}, "textures/grass2.png"));
     scene->init();
 
     return scene;
@@ -167,8 +149,8 @@ Scene* SceneFactory::createThirdScene()
     Scene* scene = new Scene(camera);
 
     ShaderProgram* grey = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyFragmentNew.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/greyFragmentNew.glsl",
         camera
     );
     scene->addShader(grey);
@@ -183,17 +165,12 @@ Scene* SceneFactory::createThirdScene()
     grey->addLight(light);
 
     for (int i = 0; i < 4; ++i) {
-        Models* treeModel = new Models(sphere, 2880, true, false);
-        treeModel->setShaderProgram(grey);
-
-        CompositeTransform* treeTransform = new CompositeTransform();
-
+        std::vector<Transform*> transforms;
         float x = (i % 2 == 0 ? -1.5f : 1.5f);
         float z = (i / 2 == 0 ? -1.5f : 1.5f);
-        treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
+        transforms.push_back(new Translate(glm::vec3(x, 0.0f, z)));
 
-        treeModel->transform= treeTransform;
-        scene->addObject(treeModel);
+        scene->addObject(ModelFactory::createModel(sphere, 2880, grey, transforms));
     }
     scene->init();
 
@@ -206,29 +183,29 @@ Scene* SceneFactory::createFourthScene()
     Scene* scene = new Scene(camera);
 
     ShaderProgram* constantShader = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\colorVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\colorFragment.glsl",
+        "shaders/colorVertex.glsl",
+        "shaders/colorFragment.glsl",
         camera
     );
     scene->addShader(constantShader);
 
     ShaderProgram* phongShader = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyFragmentNew.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/greyFragmentNew.glsl",
         camera
     );
     scene->addShader(phongShader);
 
     ShaderProgram* lambertShader = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\lambertFragment.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/lambertFragment.glsl",
         camera
     );
     scene->addShader(lambertShader);
 
     ShaderProgram* blinnShader = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\blinnFragment.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/blinnFragment.glsl",
         camera
     );
     scene->addShader(blinnShader);
@@ -282,8 +259,8 @@ Scene* SceneFactory::createFifthScene()
     Scene* scene = new Scene(camera);
 
     ShaderProgram* grey = new ShaderProgram(
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyVertex.glsl",
-        "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\greyFragmentNew.glsl",
+        "shaders/greyVertex.glsl",
+        "shaders/greyFragmentNew.glsl",
         camera
     );
     light->addObserver(grey);
@@ -296,45 +273,61 @@ Scene* SceneFactory::createFifthScene()
         std::cerr << "Warning: uniform 'modelMatrix' not found in shader." << std::endl;
     }
     for (int i = 0; i < 30; ++i) {
-        Models* treeModel = new Models(tree, 92814, true, false);
-        treeModel->setShaderProgram(grey);
-
-        CompositeTransform* treeTransform = new CompositeTransform();
-
         float x = static_cast<float>(rand() % 80 - 40);
         float z = static_cast<float>(rand() % 80 - 40);
-        treeTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
 
+        std::vector<Transform*> transforms;
+        transforms.push_back(new Translate(glm::vec3(x, 0.0f, z)));
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (2.0f)));
+        transforms.push_back(new Scale(glm::vec3(size, size, size)));
+        transforms.push_back(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 
-        treeTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-        treeTransform->addTransform(new DynamicRotate(0.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-        treeModel->transform = treeTransform;
-        scene->addObject(treeModel);
+        scene->addObject(ModelFactory::createModel(tree, 92814, grey, transforms));
     }
 
     for (int i = 0; i < 50; ++i) {
-        Models* bushModel = new Models(bushes, 8730, true, false);
-        bushModel->setShaderProgram(grey);
-
-        CompositeTransform* bushTransform = new CompositeTransform();
-
+        std::vector<Transform*> transforms;
         float x = static_cast<float>(rand() % 100 - 50);
         float z = static_cast<float>(rand() % 100 - 50);
-        bushTransform->addTransform(new Translate(glm::vec3(x, 0.0f, z)));
+        transforms.push_back(new Translate(glm::vec3(x, 0.0f, z)));
 
         float size = 1.0f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (3.0f)));
+        transforms.push_back(new Scale(glm::vec3(size, size, size)));
 
-        bushTransform->addTransform(new Scale(glm::vec3(size, size, size)));
-
-        bushModel->transform = bushTransform;
-        scene->addObject(bushModel);
+        scene->addObject(ModelFactory::createModel(bushes, 8730, grey, transforms));
     }
 
-    Models* grass = new Models(square, 6, true, true);
+    const float square2[] = {
+        -50.0f, 0.0f, -50.0f,  0.0f, 1.0f, 0.0f,
+         50.0f, 0.0f, -50.0f,  0.0f, 1.0f, 0.0f,
+        -50.0f, 0.0f,  50.0f,  0.0f, 1.0f, 0.0f,
+        -50.0f, 0.0f,  50.0f,  0.0f, 1.0f, 0.0f,
+         50.0f, 0.0f, -50.0f,  0.0f, 1.0f, 0.0f,
+         50.0f, 0.0f,  50.0f,  0.0f, 1.0f, 0.0f
+    };
 
-    grass->setShaderProgram(grey);
-    scene->addObject(grass);
+    std::vector<Transform*> transforms;
+    transforms.push_back(new LinearMove(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(10.0f, 0.0f, 0.0f), 0.3f));
+    transforms.push_back(new Scale(glm::vec3(3.0f, 3.0f, 3.0f)));
+
+    ShaderProgram* brown = new ShaderProgram(
+        "shaders/brownVertex.glsl",
+        "shaders/brownFragment.glsl",
+        camera
+    );
+    scene->addShader(brown);
+    scene->addObject(ModelFactory::createModelFromObject("objects/zombie.obj", "textures/zombie.png", brown, transforms));
+
+    std::vector<Transform*> transforms2;
+    std::vector<glm::vec3> controlPoints = {
+        {-2, 0, 0}, {0, 0, 2}, {2, 0, 4}, {4, 0, 0}, {2, 0, 4}, {0, 0, 2}, {-2, 0, 0}
+    };
+    transforms2.push_back(new BezierMove(controlPoints, 0.5f));
+    transforms2.push_back(new Scale(glm::vec3(3.0f, 3.0f, 3.0f)));
+    scene->addObject(ModelFactory::createModelFromObject("objects/zombie.obj", "textures/zombie.png", brown, transforms2));
+
+
+    scene->addObject(ModelFactory::createModel(square2, 6, grey, {}));
     scene->init();
 
     return scene;

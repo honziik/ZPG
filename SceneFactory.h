@@ -3,7 +3,8 @@
 #include "Translate.cpp"
 #include "Scale.cpp"
 #include "Rotate.cpp"
-#include "CompositTransform.cpp"
+#include "ModelFactory.h"
+#include <vector>
 class SceneFactory
 {
 public:

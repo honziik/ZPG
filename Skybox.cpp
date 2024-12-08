@@ -106,7 +106,6 @@ void Skybox::update()
     viewMatrix = camera->getViewMatrix();
 }
 
-
 void Skybox::draw(bool followCamera) {
     shader->use();
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include "Transform.h"
 class CompositeTransform : public Transform {

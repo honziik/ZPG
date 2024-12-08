@@ -90,8 +90,9 @@ void Application::processInput(GLFWwindow* window, float deltaTime) {
 		glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 		glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 
-		printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+		//printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
 
+		sceneManager->getCurrentScene()->removeObject(index);
 		glm::vec3 screenX = glm::vec3(x, newy, depth);
 		glm::mat4 view = camera->getViewMatrix();
 		glm::mat4 projection = camera->getProjectionMatrix();
@@ -99,6 +100,59 @@ void Application::processInput(GLFWwindow* window, float deltaTime) {
 		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
 
 		printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
+	}
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+		GLbyte color[4];
+		GLfloat depth;
+		GLuint index;
+		lastSwitchTime = currentTime;
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		int newy = 1200 - y;
+
+		glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+		glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+		glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+		//printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+
+		glm::vec3 screenX = glm::vec3(x, newy, depth);
+		glm::mat4 view = camera->getViewMatrix();
+		glm::mat4 projection = camera->getProjectionMatrix();
+		glm::vec4 viewPort = glm::vec4(0, 0, 1600, 1200);
+		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+
+		sceneManager->getCurrentScene()->addObject(pos);
+		printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) {
+		GLbyte color[4];
+		GLfloat depth;
+		GLuint index;
+		lastSwitchTime = currentTime;
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		int newy = 1200 - y;
+
+		glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+		glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+		glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+		//printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+
+		glm::vec3 screenX = glm::vec3(x, newy, depth);
+		glm::mat4 view = camera->getViewMatrix();
+		glm::mat4 projection = camera->getProjectionMatrix();
+		glm::vec4 viewPort = glm::vec4(0, 0, 1600, 1200);
+		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+		sceneManager->getCurrentScene()->controlPoints.push_back(pos);
+		printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
+	}
+	
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		sceneManager->getCurrentScene()->addBObject();
 	}
 }
 
@@ -137,9 +191,7 @@ Application::Application() {
 
 	sceneManager = new SceneManager();
 
-	//sceneManager->addScene(SceneFactory::createFifthScene());
 	sceneManager->addScene(SceneFactory::createSecondScene());
-
 	sceneManager->addScene(SceneFactory::createFifthScene());
 	sceneManager->addScene(SceneFactory::createFirstScene());
 	sceneManager->addScene(SceneFactory::createThirdScene());

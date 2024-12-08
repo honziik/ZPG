@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BezierMove.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CompositTransform.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
@@ -138,7 +139,9 @@
     <ClCompile Include="DynamicRotate.cpp" />
     <ClCompile Include="Firefly.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LinearMove.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelFactory.cpp" />
     <ClCompile Include="Models.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Rotate.cpp" />
@@ -165,6 +168,7 @@
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Firefly.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="ModelFactory.h" />
     <ClInclude Include="Models.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Plain.h" />

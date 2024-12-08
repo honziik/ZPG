@@ -11,9 +11,11 @@
 #include "Models.h"
 #include "Camera.cpp"
 #include "Skybox.h"
+#include "ModelFactory.h"
 
 class Scene {
 public:
+    std::vector<glm::vec3> controlPoints;
     Scene(Camera* camera);
     void render();
     void addObject(DrawableObject* object);
@@ -22,6 +24,9 @@ public:
     Camera* getCamera();
     void addSkybox(Skybox* skybox);
     void changeSkybox();
+    void removeObject(int index);
+    void addObject(glm::vec3 position);
+    void addBObject();
 
 private:
     std::vector<DrawableObject*> objects;
