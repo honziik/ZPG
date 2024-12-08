@@ -64,12 +64,14 @@ void Scene::addObject(glm::vec3 position)
 
 void Scene::addBObject()
 {
-    std::vector<Transform*> transforms;
-    transforms.push_back(new BezierMove(controlPoints, 0.5f));
-    transforms.push_back(new Scale(glm::vec3(3.0f, 3.0f, 3.0f)));
+    if (controlPoints.size() >= 4 && (controlPoints.size() - 1) % 3 == 0) {
+        std::vector<Transform*> transforms;
+        transforms.push_back(new BezierMove(controlPoints, 0.5f));
+        transforms.push_back(new Scale(glm::vec3(3.0f, 3.0f, 3.0f)));
 
-    addObject(ModelFactory::createModelFromObject("objects/zombie.obj", "textures/zombie.png", shaders[1], transforms));
-    controlPoints.clear();
+        addObject(ModelFactory::createModelFromObject("objects/zombie.obj", "textures/zombie.png", shaders[1], transforms));
+        controlPoints.clear();
+    }
 }
 
 void Scene::render() {

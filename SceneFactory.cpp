@@ -10,8 +10,6 @@
 #include "LinearMove.cpp"
 #include "BezierMove.cpp"
 
-
-//todo bezirova krivka + zmenit glsl soubory + vyjebat veci z aplikace
 Scene* SceneFactory::createFirstScene()
 {
     Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
@@ -84,14 +82,14 @@ Scene* SceneFactory::createSecondScene()
         "C:\\Users\\User\\source\\repos\\zpg\\zpg\\shaders\\fireflyFragment.glsl",
         camera
     );
-    ShaderProgram* newShader = new ShaderProgram("PhongVertexShader.glsl", "PhongFragmentShader.glsl", camera);
-
-
-    scene->addObject(ModelFactory::createModelFromObject("objects/house.obj", "textures/house.png", brown, {}));
-
     std::vector<Transform*> transforms;
-    transforms.push_back(new Scale(glm::vec3(30.0f, 30.0f, 30.0f)));
-    scene->addObject(ModelFactory::createModelFromObject("objects/logo.obj", "textures/grass2.png", brown, transforms));
+    transforms.push_back(new Translate({ -10.0f,0.0f,0.0f }));
+    scene->addObject(ModelFactory::createModelFromObject("objects/house.obj", "textures/house.png", brown, transforms));
+    transforms.clear();
+    
+    transforms.push_back(new Translate({0.0f,30.0f,0.0f}));
+    transforms.push_back(new Scale(glm::vec3(10.0f, 10.0f, 10.0f)));
+    scene->addObject(ModelFactory::createModelFromObject("objects/logo.obj", "textures/red.png", brown, transforms));
 
     scene->addShader(grey);
     scene->addShader(brown);
@@ -311,11 +309,14 @@ Scene* SceneFactory::createFifthScene()
     transforms.push_back(new Scale(glm::vec3(3.0f, 3.0f, 3.0f)));
 
     ShaderProgram* brown = new ShaderProgram(
-        "shaders/brownVertex.glsl",
-        "shaders/brownFragment.glsl",
+        "shaders/brownVertex2.glsl",
+        "shaders/brownFragment2.glsl",
         camera
     );
     scene->addShader(brown);
+    light->addObserver(brown);
+
+    brown->addLight(light);
     scene->addObject(ModelFactory::createModelFromObject("objects/zombie.obj", "textures/zombie.png", brown, transforms));
 
     std::vector<Transform*> transforms2;
